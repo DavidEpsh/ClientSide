@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class Action implements Serializable {
 
+	private static final long serialVersionUID = 2226368497223644299L;
 	String description;
 	public String getDescription() {
 		return description;

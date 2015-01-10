@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import model.algorithm.Action;
 
 public class Solution implements Serializable {
+	
+	private static final long serialVersionUID = 2226368497223644299L;
 	private ArrayList<Action> actions;
 	private String problemDescription;
 
