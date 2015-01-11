@@ -28,7 +28,7 @@ public class MyConsoleView extends Observable implements View {
 			
 		} while (!(action.equals("exit")));
 		
-		
+		scanner.close();
 	}
 
 	@Override

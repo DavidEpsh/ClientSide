@@ -9,6 +9,7 @@ import model.Model;
 import model.MyModel;
 import model.Solution;
 import view.MyConsoleView;
+import view.SelectGameWindow;
 import view.View;
 
 public class Presenter implements Observer {
@@ -17,6 +18,10 @@ public class Presenter implements Observer {
 	private View view;
 	private UserCommands commands;
 	private ArrayList<Model> models; // all running models
+	
+	public Presenter(Model model) {
+		this(model, null);
+	}
 	
 	public Presenter(Model model, View view)
 	{
@@ -59,13 +64,14 @@ public class Presenter implements Observer {
 	
 	public static void main(String[] args) {
 		MyModel model = new MyModel();
-		MyConsoleView view = new MyConsoleView();
-		Presenter presenter = new Presenter(model, view);
+		//MyConsoleView view = new MyConsoleView();
+		SelectGameWindow view = new SelectGameWindow(300, 300, "Select game");
+		Presenter presenter = new Presenter(model);
 		
 		model.addObserver(presenter);
-		view.addObserver(presenter);
+//		view.addObserver(presenter);
 		
-		view.start();
+		view.run();
 	}
 	
 }
