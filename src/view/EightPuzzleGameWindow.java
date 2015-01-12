@@ -1,8 +1,5 @@
 package view;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import model.Solution;
 import model.algorithm.Action;
 
@@ -51,9 +48,6 @@ public class EightPuzzleGameWindow extends BasicWindow implements View {
 		comboPuzzleProperties.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false));
 	    String itemsProperties[] = { "Random", "User Defind" };
 	    comboPuzzleProperties.setItems(itemsProperties);
-
-	    Label lblPropertiesSelected = new Label(shell, SWT.NONE);
-		lblPropertiesSelected.setText("Choosen game properties: ");
 		
 		Label lblAlgorithm = new Label(shell, SWT.NONE);
 		lblAlgorithm.setText("Choose algorithm: ");
