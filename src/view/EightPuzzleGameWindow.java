@@ -16,7 +16,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 
 public class EightPuzzleGameWindow extends BasicWindow implements View {
-	private String userAction;
+	private String action;
 	private List lstActions;
 	
 	public EightPuzzleGameWindow(int width, int height, String title) {
@@ -48,6 +48,10 @@ public class EightPuzzleGameWindow extends BasicWindow implements View {
 		comboPuzzleProperties.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false));
 	    String itemsProperties[] = { "Random", "User Defind" };
 	    comboPuzzleProperties.setItems(itemsProperties);
+	    
+	    final Text txtGameDescription = new Text(shell, SWT.BORDER);
+		txtGameDescription.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true ,2, 1));
+		txtGameDescription.setEnabled(false);
 		
 		Label lblAlgorithm = new Label(shell, SWT.NONE);
 		lblAlgorithm.setText("Choose algorithm: ");
@@ -64,20 +68,38 @@ public class EightPuzzleGameWindow extends BasicWindow implements View {
 		lstActions = new List(shell, SWT.BORDER | SWT.V_SCROLL);
 		lstActions.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 				
+		EightPuzzle puzzle=new EightPuzzle(shell, SWT.BORDER);
+		 puzzle.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,1,2));
+		 
+		 comboPuzzleProperties.addSelectionListener(new SelectionListener() {
+			 
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				if(comboPuzzleProperties.getText().equals("User Defind")){
+					txtGameDescription.setEnabled(true);
+				}
+			}
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub	
+			}
+		});
+		 
 		btnSearch.addSelectionListener(new SelectionListener() {
 			
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {	
 
-				userAction = "SelectDomain " + comboPuzzleProperties.getText() ;	
+				action = "SD 8puzzle";// + txtGameDescription.getText() ;	
 				EightPuzzleGameWindow.this.setChanged();
 				EightPuzzleGameWindow.this.notifyObservers();	
 				
-				userAction = "SelectAlgorithm " + comboAlgorithm.getText();
+				action = "SA " + comboAlgorithm.getText();
 				EightPuzzleGameWindow.this.setChanged();
 				EightPuzzleGameWindow.this.notifyObservers();	
 				
-				userAction = "SolveDomain";
+				action = "SlD";
 				EightPuzzleGameWindow.this.setChanged();
 				EightPuzzleGameWindow.this.notifyObservers();	
 			}
@@ -99,7 +121,12 @@ public class EightPuzzleGameWindow extends BasicWindow implements View {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	public void displaySolution(Solution solution) {
+		for(Action a : solution.getActions())
+			System.out.println(a);
+	}
+/*
 	@Override
 	public void displaySolution(Solution solution) {
 		for (Action a : solution.getActions()) {
@@ -113,10 +140,10 @@ public class EightPuzzleGameWindow extends BasicWindow implements View {
 			});						
 		}		
 	}
-
+*/
 	@Override
 	public String getUserAction() {		
-		return userAction;
+		return action;
 	}
 
 }

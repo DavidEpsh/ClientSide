@@ -2,6 +2,9 @@ package view;
 
 import java.util.Observable;
 
+import model.Solution;
+import model.algorithm.Action;
+
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
