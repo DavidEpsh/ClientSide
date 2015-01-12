@@ -8,7 +8,6 @@ import presenter.UserCommands.Command;
 import model.Model;
 import model.MyModel;
 import model.Solution;
-import view.MyConsoleView;
 import view.SelectGameWindow;
 import view.View;
 
@@ -31,7 +30,11 @@ public class Presenter implements Observer {
 		models = new ArrayList<Model>();
 		models.add(model);
 	}
-
+	
+	public void setView(View view) {
+		this.view = view;
+	}
+	
 	@Override
 	public void update(Observable observable, Object arg1) {
 		if (observable instanceof Model)
@@ -65,11 +68,12 @@ public class Presenter implements Observer {
 	public static void main(String[] args) {
 		MyModel model = new MyModel();
 		//MyConsoleView view = new MyConsoleView();
-		SelectGameWindow view = new SelectGameWindow(400, 400, "Select game");
+		
 		Presenter presenter = new Presenter(model);
+		SelectGameWindow view = new SelectGameWindow(presenter, 400, 400, "Select game");
 		
 		model.addObserver(presenter);
-		view.addObserver(presenter);
+//		view.addObserver(presenter);
 		
 		view.run();
 	}

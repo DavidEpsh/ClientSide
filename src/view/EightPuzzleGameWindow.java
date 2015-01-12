@@ -10,19 +10,23 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 
-public class EightPuzzleGameWindow extends BasicWindow implements View {
+import presenter.Presenter;
+
+public class EightPuzzleGameWindow extends UIView {
+	
+	public EightPuzzleGameWindow(Presenter presenter,Display display, int width, int height, String title) {
+		super(presenter,display, width, height, title);		
+	}
+	
 	private String action;
 	private List lstActions;
 	
-	public EightPuzzleGameWindow(int width, int height, String title) {
-		super(width, height, title);		
-	}
-
 	@Override
 	void initWidgets() {
 		
@@ -91,7 +95,7 @@ public class EightPuzzleGameWindow extends BasicWindow implements View {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {	
 
-				action = "SD 8puzzle";// + txtGameDescription.getText() ;	
+				action = "SD 8puzzle:" + txtGameDescription.getText() ;	
 				EightPuzzleGameWindow.this.setChanged();
 				EightPuzzleGameWindow.this.notifyObservers();	
 				
@@ -121,17 +125,18 @@ public class EightPuzzleGameWindow extends BasicWindow implements View {
 		// TODO Auto-generated method stub
 		
 	}
-	
+	/*
 	public void displaySolution(Solution solution) {
 		for(Action a : solution.getActions())
 			System.out.println(a);
 	}
-/*
+	*/
+
 	@Override
 	public void displaySolution(Solution solution) {
 		for (Action a : solution.getActions()) {
 			
-			display.asyncExec(new Runnable() {
+			this.shell.getDisplay().syncExec(new Runnable() {
 				
 				@Override
 				public void run() {					
@@ -140,7 +145,7 @@ public class EightPuzzleGameWindow extends BasicWindow implements View {
 			});						
 		}		
 	}
-*/
+
 	@Override
 	public String getUserAction() {		
 		return action;

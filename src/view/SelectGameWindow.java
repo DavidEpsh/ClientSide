@@ -7,11 +7,14 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Shell;
+
+import presenter.Presenter;
 
 public class SelectGameWindow extends BasicWindow {
 
-	public SelectGameWindow(int width, int height, String title) {
-		super(width, height, title);		
+	public SelectGameWindow(Presenter presenter, int width, int height, String title) {
+		super(presenter,width, height, title);		
 	}
 
 	@Override
@@ -32,11 +35,17 @@ public class SelectGameWindow extends BasicWindow {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				// Choose window according to the game (using a factory)				
-				display.dispose();
-				
-				BasicWindow window = new EightPuzzleGameWindow(400, 300, "8puzzle Game");
+				if(combo.getText().equals("8puzzle")){
+				UIView window = new EightPuzzleGameWindow(presenter, display, 400, 300, "8puzzle Game");
 				window.run();
+				}
+		/*		else
+					UIView window = new MazeWindow(presenter, display, 400, 300, "Maze game");
+					window.run();
+					}
+		*/
 			}
+			
 			
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
@@ -44,6 +53,8 @@ public class SelectGameWindow extends BasicWindow {
 				
 			}
 		});
+	    
+	    shell.setVisible(false);
 	}
 
 }

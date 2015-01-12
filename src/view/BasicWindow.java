@@ -8,16 +8,20 @@ import model.algorithm.Action;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
+import presenter.Presenter;
+
 public abstract class BasicWindow extends Observable implements Runnable{
 
 	protected Display display;
 	protected Shell shell;
+	protected Presenter presenter;
 	
-	public BasicWindow(int width, int height,String title) {
+	public BasicWindow(Presenter presenter, int width, int height,String title) {
 		display=new Display();
 		shell=new Shell(display);
 		shell.setSize(width, height);
 		shell.setText(title);
+		this.presenter = presenter;
 	}
 	
 	abstract void initWidgets();
