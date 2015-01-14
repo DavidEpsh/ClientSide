@@ -22,12 +22,12 @@ public class EightPuzzle extends Canvas{
 	int[][] gameState;
 	String description;
 
-	 public EightPuzzle(Composite parent, int style) {
+	 public EightPuzzle(Composite parent, int style, String description) {
 		super(parent, style);
 		//c = new GameCharacter(10, 10);
 		//set a white background (red,green,blue)
 		setBackground(new Color(null,255,255,255));
-		description = "1,2,3,4,5,6,7,0,8";
+		this.description = description;
 		
 		String[] tempS = description.split(",");
 		

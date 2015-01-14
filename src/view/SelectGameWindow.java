@@ -36,7 +36,7 @@ public class SelectGameWindow extends BasicWindow {
 			public void widgetSelected(SelectionEvent arg0) {
 				// Choose window according to the game (using a factory)				
 				if(combo.getText().equals("8puzzle")){
-				UIView window = new EightPuzzleGameWindow(presenter, display, 400, 300, "8puzzle Game");
+				UIView window = new EightPuzzleSelectionWindow(presenter, display, 500, 500, "8puzzle Game");
 				window.run();
 				}
 		/*		else

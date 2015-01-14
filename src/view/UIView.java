@@ -1,5 +1,6 @@
 package view;
 
+import java.util.Currency;
 import java.util.Observable;
 
 import org.eclipse.swt.events.DisposeEvent;
@@ -17,10 +18,13 @@ public abstract class UIView extends Observable implements View, Runnable {
 		shell=new Shell(display);
 		shell.setSize(width, height);
 		shell.setText(title);
-		
+		setPresenter(presenter);
+		setDisplay(display);
 		this.addObserver(presenter);
 		presenter.setView(this);
 	}
+	Presenter currPresenter;
+	Display currDisplay;
 	
 	abstract void initWidgets();
 	
@@ -43,4 +47,19 @@ public abstract class UIView extends Observable implements View, Runnable {
 		
 	}
 	
+	public void setPresenter(Presenter presenter){
+		this.currPresenter = presenter;
+	}
+	
+	public Presenter getPresenter(){
+		return this.currPresenter;
+	}
+	
+	public void setDisplay(Display display){
+		this.currDisplay = display;
+	}
+	
+	public void displayTimesSolution(){
+		
+	}
 }
