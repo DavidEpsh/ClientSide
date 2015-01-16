@@ -19,8 +19,9 @@ public class EightPuzzle extends Canvas{
 	//GameCharacter c;
 	Timer timer;
 	TimerTask task;
-	int[][] gameState;
+	int[][] gameState = new int[3][3];
 	String description;
+	String[] descriptionArray = new String[9];
 
 	 public EightPuzzle(Composite parent, int style, String description) {
 		super(parent, style);
@@ -29,7 +30,7 @@ public class EightPuzzle extends Canvas{
 		setBackground(new Color(null,255,255,255));
 		this.description = description;
 		
-		String[] tempS = description.split(",");
+		descriptionArray = description.split(",");
 		
 		addPaintListener(new PaintListener() {
 			
@@ -49,13 +50,87 @@ public class EightPuzzle extends Canvas{
 				    for(int j=0;j<3;j++){
 				    	int x=j*w;
 				        int y=i*h;
-				        e.gc.drawText(tempS[k], x , y );
+				        e.gc.drawText(descriptionArray[k], x , y );
 				        k++;
 				    }
 				}
 			});
 	 }
+	 
+	 public void zeroUp(){
+		 int zeroState = getZero();
+		 
+		 if (zeroState <= 2)
+			 return;
+		 
+		 descriptionArray[zeroState] = descriptionArray[zeroState-3];
+		 descriptionArray[zeroState-3] = "0";
+		 
+		 updateDescription();
+	}
+
+	public void zeroDown(){
+		int zeroState = getZero();
+		
+		if (zeroState >= 6 )
+			 return;
+		 
+		 descriptionArray[zeroState] = descriptionArray[zeroState+3];
+		 descriptionArray[zeroState+3] = "0";
+		 
+		 updateDescription();
+	}
+	
+	public void zeroLeft(){
+		
+		int zeroState = getZero();
+		
+		if (zeroState == 6 || zeroState == 3 || zeroState == 0)
+			 return;
+		 
+		 descriptionArray[zeroState] = descriptionArray[zeroState-1];
+		 descriptionArray[zeroState-1] = "0";
+		 
+		 updateDescription();
+		
+	}
+	
+	public void zeroRight(){
+		
+		int zeroState = getZero();
+		
+		if (zeroState == 2 || zeroState == 5 || zeroState == 8)
+			 return;
+		 
+		 descriptionArray[zeroState] = descriptionArray[zeroState+1];
+		 descriptionArray[zeroState+1] = "0";
+		 
+		 updateDescription();
+	}
+	
+	public int getZero(){
+		for(int i=0 ; i<9 ; i++){
+			if (descriptionArray[i].equals("0"))
+				return i;
+		}
+		return -1;
+	}
+
+
+	public void updateDescription(){
+		String temp = "";
+		for(int i=0 ; i<9 ; i++){
+			if(i==8)
+				temp += descriptionArray[i];
+			else {
+				temp += descriptionArray[i] + ",";
+			}
+		}
+		
+		description = temp;
+	}
 }
+
 	/*	addDisposeListener(new DisposeListener() {
 			
 			@Override

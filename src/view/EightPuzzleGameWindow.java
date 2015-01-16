@@ -92,6 +92,68 @@ public class EightPuzzleGameWindow extends UIView {
 		lstActions.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 6));
 		lstActions.setVisible(false);
 		
+		
+		btnUp.addSelectionListener(new SelectionListener() {			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				puzzle.zeroUp();
+				puzzle.redraw();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		btnDown.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				puzzle.zeroDown();
+				puzzle.redraw();
+				
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		btnLeft.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				
+				puzzle.zeroLeft();
+				puzzle.redraw();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		btnRight.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				puzzle.zeroRight();
+				puzzle.redraw();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
 		btnGiveUpShowSolution.addSelectionListener(new SelectionListener() {
 			
 			@Override
@@ -100,7 +162,7 @@ public class EightPuzzleGameWindow extends UIView {
 				puzzle.setVisible(false);
 				lstActions.setVisible(true);
 				
-				action = "SD 8puzzle:" + description ;	
+				action = "SD 8puzzle:" + puzzle.description ;	
 				EightPuzzleGameWindow.this.setChanged();
 				EightPuzzleGameWindow.this.notifyObservers();	
 				

@@ -1,5 +1,7 @@
 package view;
 
+import java.util.Random;
+
 import model.Solution;
 import model.algorithm.Action;
 
@@ -15,6 +17,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
+import org.omg.CosNaming.IstringHelper;
 
 import presenter.Presenter;
 
@@ -72,7 +75,7 @@ public class EightPuzzleSelectionWindow extends UIView {
 		btnUserGame.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				UIView window = new EightPuzzleGameWindow( currPresenter, currDisplay, 500, 500, "My 8puzzle Game", "1,2,3,4,5,6,0,7,8");
+				UIView window = new EightPuzzleGameWindow( currPresenter, currDisplay, 500, 500, "My 8puzzle Game", createCustomGame());
 				window.run();
 				shell.dispose();
 			}
@@ -155,6 +158,33 @@ public class EightPuzzleSelectionWindow extends UIView {
 	public void displayTimesSolution() {
 		// TODO Auto-generated method stub
 		super.displayTimesSolution();
+	}
+	
+	public String createCustomGame(){
+		int[] tempIntegers;
+		int[] randArray;
+		String str = "";
+		tempIntegers = new int[]{1,2,3,4,5,6,7,8};
+		Random rand = new Random();
+		randArray = new int[9];
+		
+		for(int i=0 ; i<8 ; i++){
+			int r = rand.nextInt(9);
+			
+			if(randArray[r]==0)
+				randArray[r]= tempIntegers[i];
+			else
+				i--;
+		}
+		
+		for(int i=0 ; i<9 ; i++){
+			if(i==8)
+				str += Integer.toString(randArray[i]);
+			else
+				str += Integer.toString(randArray[i]) + ",";
+		}
+		
+		return str;
 	}
 
 }
