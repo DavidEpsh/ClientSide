@@ -62,4 +62,8 @@ public abstract class UIView extends Observable implements View, Runnable {
 	public void displayTimedSolution(){
 		
 	}
+	
+	public void updateDescription(String desctription){
+		
+	}
 }

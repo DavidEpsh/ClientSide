@@ -14,7 +14,7 @@ public class UserCommands {
 		commands.put("SD", new SelectDomainCommand());
 		commands.put("SA", new SelectAlgorithmCommand());
 		commands.put("SlD", new SolveDomainCommand());
-	//	commands.put("SIT", new SolveDomainInThread());
+		commands.put("GetNewGame", new GetNewGameCommand());
 	}
 	
 	public Command selectCommand(String commandName)
@@ -54,7 +54,17 @@ public class UserCommands {
 		public Model doCommand(Model model, String args) {
 			model.solveDomain();	
 			return model;
-		}		
+		}
+	}
+		
+	private class GetNewGameCommand implements Command
+	{
+		@Override
+		public Model doCommand(Model model, String args) {
+		model.getNewGame();	
+			return model;
+		}
+	
 	}
 /*	
 	private class SolveDomainInThread implements Command

@@ -39,6 +39,7 @@ public class Presenter implements Observer {
 	public void update(Observable observable, Object arg1) {
 		if (observable instanceof Model)
 		{
+			
 			Solution solution = ((Model)observable).getSolution();
 			view.displaySolution(solution);
 		}

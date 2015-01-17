@@ -8,6 +8,7 @@ public class MyModel extends Observable implements Model {
 	
 	private Solution solution;
 	private Problem problem;
+	private String description;
 	
 	
 	public MyModel()
@@ -60,6 +61,20 @@ public class MyModel extends Observable implements Model {
 		this.notifyObservers();
 	}
 
+	public void getNewGame(){
+		
+		Client client = new Client();
+		description = client.getNewGame(problem);
+		
+		this.setChanged();
+		this.notifyObservers();
+		
+	}
+	
+	public String getDescription(){
+		return this.description;
+	}
+	
 	@Override
 	public Solution getSolution() {
 		return solution;

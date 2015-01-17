@@ -28,6 +28,7 @@ public class EightPuzzleSelectionWindow extends UIView {
 	}
 	
 	private String action;
+	String description;
 	private List lstActions;
 	
 	@Override
@@ -75,7 +76,16 @@ public class EightPuzzleSelectionWindow extends UIView {
 		btnUserGame.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				UIView window = new EightPuzzleGameWindow( currPresenter, currDisplay, 500, 500, "My 8puzzle Game", createCustomGame());
+				
+				action = "SD 8puzzle:" + txtGameDescription.getText() ;	
+				EightPuzzleSelectionWindow.this.setChanged();
+				EightPuzzleSelectionWindow.this.notifyObservers();	
+				
+				action = "GetNewGame";	
+				EightPuzzleSelectionWindow.this.setChanged();
+				EightPuzzleSelectionWindow.this.notifyObservers();	
+				
+				UIView window = new EightPuzzleGameWindow( currPresenter, currDisplay, 500, 500, "My 8puzzle Game", description);
 				window.run();
 				shell.dispose();
 			}
@@ -134,6 +144,8 @@ public class EightPuzzleSelectionWindow extends UIView {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	
 
 	@Override
 	public void displaySolution(Solution solution) {
@@ -187,4 +199,8 @@ public class EightPuzzleSelectionWindow extends UIView {
 		return str;
 	}
 
+	@Override
+	public void updateDescription(String description){
+		this.description = description;
+	}
 }

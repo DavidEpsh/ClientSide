@@ -32,9 +32,42 @@ public class Client {
 			out.writeObject(problem);			
 			
 			Solution solution = (Solution)in.readObject();
-			System.out.println("Found solution: " + solution.getProblemDescription());
 			
 			return solution;	
+								
+		} catch (IOException e) {			
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				out.close();
+				in.close();
+				socket.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}			
+		}	
+		return null;
+	}
+	
+	public String getNewGame(Problem problem) {		
+		Socket socket = null;
+		ObjectInputStream in = null;
+		ObjectOutputStream out = null;
+		
+		//System.out.println("Send new problem: " + problem.getDomainName());
+		
+		try {
+			socket = new Socket(serverAddress, port);
+			out = new ObjectOutputStream(socket.getOutputStream());
+			in = new ObjectInputStream(socket.getInputStream());
+						
+			out.writeObject(problem);			
+			
+			String gameDescription = (String)in.readObject();
+			
+			return gameDescription;	
 								
 		} catch (IOException e) {			
 			e.printStackTrace();
