@@ -155,9 +155,9 @@ public class EightPuzzleSelectionWindow extends UIView {
 	}
 	
 	@Override
-	public void displayTimesSolution() {
+	public void displayTimedSolution() {
 		// TODO Auto-generated method stub
-		super.displayTimesSolution();
+		super.displayTimedSolution();
 	}
 	
 	public String createCustomGame(){

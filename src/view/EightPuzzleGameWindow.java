@@ -84,9 +84,9 @@ public class EightPuzzleGameWindow extends UIView {
 		btnGiveUpShowSolution.setText("I Give Up, Just Show Me The Solution");
 		btnGiveUpShowSolution.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
 		
-		Button btnGiveUpShowTimesSolution = new Button(shell, SWT.PUSH);
-		btnGiveUpShowTimesSolution.setText("I Give Up, How Me Step By Step");
-		btnGiveUpShowTimesSolution.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		Button btnGiveUpShowTimedSolution = new Button(shell, SWT.PUSH);
+		btnGiveUpShowTimedSolution.setText("I Give Up, Show Me Step By Step");
+		btnGiveUpShowTimedSolution.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
 		
 		lstActions = new List(shell, SWT.BORDER | SWT.V_SCROLL);
 		lstActions.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 6));
@@ -180,12 +180,29 @@ public class EightPuzzleGameWindow extends UIView {
 			public void widgetDefaultSelected(SelectionEvent arg0) {
 			}
 		});
-		
+	
+		btnGiveUpShowTimedSolution.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+
+				UIView window = new EightPuzzleTimedGameWindow( currPresenter, currDisplay, 500, 500, "HAVE FUN", puzzle.description);
+				window.run();
+				shell.dispose();
+				
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
 	
 	@Override
-	public void displayTimesSolution() {
+	public void displayTimedSolution() {
 		// TODO Auto-generated method stub
-		super.displayTimesSolution();
+		super.displayTimedSolution();
 	}
 }

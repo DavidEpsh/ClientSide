@@ -1,5 +1,9 @@
 package view;
 
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.ImageObserver;
+import java.awt.image.ImageProducer;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -38,8 +42,47 @@ public class EightPuzzle extends Canvas{
 			public void paintControl(PaintEvent e) {
 				 e.gc.setForeground(new Color(null,0,0,0));
 				 e.gc.setBackground(new Color(null,255,255,255));
-
-				 int width=getSize().x;
+				 
+				 
+				 
+				 Image image1 = new Image() {
+					
+					@Override
+					public int getWidth(ImageObserver observer) {
+						// TODO Auto-generated method stub
+						return 0;
+					}
+					
+					@Override
+					public ImageProducer getSource() {
+						// TODO Auto-generated method stub
+						return null;
+					}
+					
+					@Override
+					public Object getProperty(String name, ImageObserver observer) {
+						// TODO Auto-generated method stub
+						return null;
+					}
+					
+					@Override
+					public int getHeight(ImageObserver observer) {
+						// TODO Auto-generated method stub
+						return 0;
+					}
+					
+					@Override
+					public Graphics getGraphics() {
+						// TODO Auto-generated method stub
+						return null;
+					}
+				};
+				 
+				
+				
+				
+				
+				int width=getSize().x;
 				 int height=getSize().y;
 
 				 int w=width/3;
@@ -129,7 +172,11 @@ public class EightPuzzle extends Canvas{
 		
 		description = temp;
 	}
-}
+
+	public void updateDescription(String description){
+		this.description = description;
+		descriptionArray = description.split(",");
+	}
 
 	/*	addDisposeListener(new DisposeListener() {
 			
@@ -140,7 +187,7 @@ public class EightPuzzle extends Canvas{
 		
 		});
 		
-		}
+		} */
 	/*
 	public void start() {
 		timer = new Timer();
@@ -164,7 +211,7 @@ public class EightPuzzle extends Canvas{
 		timer.scheduleAtFixedRate(task, 0, 500);
 
 	}
-	
+	*/
 	public void stop() {
 		if(task != null)
 			task.cancel();
@@ -173,4 +220,4 @@ public class EightPuzzle extends Canvas{
 	}
 
 }
-*/
+

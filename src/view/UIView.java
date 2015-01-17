@@ -59,7 +59,7 @@ public abstract class UIView extends Observable implements View, Runnable {
 		this.currDisplay = display;
 	}
 	
-	public void displayTimesSolution(){
+	public void displayTimedSolution(){
 		
 	}
 }
