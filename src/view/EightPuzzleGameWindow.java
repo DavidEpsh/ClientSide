@@ -1,5 +1,7 @@
 package view;
 
+import java.awt.event.WindowStateListener;
+
 import model.Solution;
 import model.algorithm.Action;
 
@@ -186,9 +188,12 @@ public class EightPuzzleGameWindow extends UIView {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 
-				UIView window = new EightPuzzleTimedGameWindow( currPresenter, currDisplay, 500, 500, "HAVE FUN", puzzle.description);
-				window.run();
 				shell.dispose();
+				UIView window = new EightPuzzleTimedGameWindow( currPresenter, currDisplay, 500, 500, "HAVE FUN", puzzle.description);
+				
+				window.run();
+				window.start();
+				
 				
 			}
 			

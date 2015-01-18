@@ -1,6 +1,8 @@
 package view;
 
+import java.util.ArrayList;
 import java.util.Observer;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -36,7 +38,7 @@ public class EightPuzzleTimedGameWindow extends UIView {
 	@Override
 	public void start() {
 		
-		
+		getSolution();
 	}
 
 	@Override
@@ -70,42 +72,69 @@ public class EightPuzzleTimedGameWindow extends UIView {
 		Button btnClose = new Button(shell, SWT.PUSH);
 		btnClose.setText("Close");
 		btnClose.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1,1));
-		
-		getSolution();
-		
-		
+
 	}
 	
 	@Override
 	public void displaySolution(Solution solution) {
+		timer = new Timer();
+		ArrayList<String> actionArray = new ArrayList<String>();
 		
 		for (Action a : solution.getActions()) {
-			String[] temp = a.getDescription().split("-->");
 			
-			shell.getDisplay().syncExec(new Runnable() {
+			String[] temp = a.getDescription().split("-->");
+			actionArray.add(temp[1]);
+			
+		}
+		int i = 0;
+		
+		while( i < actionArray.size())
+		{	
+			int j = i;
+			task = new TimerTask() {
 				
 				@Override
-				public void run() {	
-					puzzle.updateDescription(temp[1]);
-					puzzle.redraw();
-			//		lstActions.add(a.toString());
+				public void run() {
+					shell.getDisplay().syncExec(new Runnable() {
+						
+						@Override
+						public void run() {
+							puzzle.updateDescription(actionArray.get(j));
+							puzzle.redraw();
+							
+						}
+					});
+
 				}
 				
-			});	
-			
-			try {
-				wait(500);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
+			};
+			i++;
+
+			timer = new Timer();
+			timer.schedule(task, 500*i);
+		}
+//			String[] temp = a.getDescription().split("-->");
+//			
+//			shell.getDisplay().syncExec(new Runnable() {
+//				
+//				@Override
+//				public void run() {	
+//					puzzle.updateDescription(temp[1]);
+//					shell.redraw();
+//			//		lstActions.add(a.toString());
+//				}
+//				
+//			});	
+//			
+//			try {
+//				wait(500);
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			
 		}
 		
-			
-		}
-	
-	
 	public void getSolution(){
 		action = "SD 8puzzle:" + description ;	
 		EightPuzzleTimedGameWindow.this.setChanged();

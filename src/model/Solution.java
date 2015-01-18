@@ -26,4 +26,8 @@ public class Solution implements Serializable {
 	public void setProblemDescription(String problemDescription) {
 		this.problemDescription = problemDescription;
 	}
+	
+	public int getLength(){
+		return actions.size();
+	}
 }
