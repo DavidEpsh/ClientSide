@@ -90,17 +90,18 @@ public class EightPuzzleTimedGameWindow extends UIView {
 					puzzle.redraw();
 			//		lstActions.add(a.toString());
 				}
-			
-//				try {
-//					wait(1);
-//				} catch (InterruptedException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
 				
 			});	
 			
+			try {
+				wait(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
+		
 			
 		}
 	

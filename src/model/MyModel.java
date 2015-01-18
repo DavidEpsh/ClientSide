@@ -71,6 +71,7 @@ public class MyModel extends Observable implements Model {
 		
 	}
 	
+	@Override
 	public String getDescription(){
 		return this.description;
 	}

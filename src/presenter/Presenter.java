@@ -41,7 +41,13 @@ public class Presenter implements Observer {
 		{
 			
 			Solution solution = ((Model)observable).getSolution();
-			view.displaySolution(solution);
+			
+			if (solution == null){
+				view.updateDescription(((Model)observable).getDescription());
+				}
+			
+			else
+				view.displaySolution(solution);
 		}
 		else if (observable == view)
 		{

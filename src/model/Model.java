@@ -12,4 +12,5 @@ public interface Model extends Task {
 	Solution getSolution();	
 	void addObserver(Observer o);
 	void getNewGame();
+	String getDescription();
 }
