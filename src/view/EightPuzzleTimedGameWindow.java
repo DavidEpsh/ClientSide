@@ -31,7 +31,6 @@ public class EightPuzzleTimedGameWindow extends UIView {
 	Presenter presenter;
 	String action;
 	String description;
-	Timer timer;
 	TimerTask task;
 	EightPuzzle puzzle;
 	
@@ -77,30 +76,29 @@ public class EightPuzzleTimedGameWindow extends UIView {
 	
 	@Override
 	public void displaySolution(Solution solution) {
-		timer = new Timer();
-		ArrayList<String> actionArray = new ArrayList<String>();
-		
-		for (Action a : solution.getActions()) {
-			
-			String[] temp = a.getDescription().split("-->");
-			actionArray.add(temp[1]);
-			
-		}
-		int i = 0;
-		
-		while( i < actionArray.size())
-		{	
-			int j = i;
-			task = new TimerTask() {
+//		final int timeout = 500;
+//		int currTimeout = timeout;
+		Thread thread = new Thread() {
+			@Override
+			public void run() {
 				
-				@Override
-				public void run() {
+				for (Action a : solution.getActions()) {
+			
+					String[] temp = a.getDescription().split("-->");
+				
 					shell.getDisplay().syncExec(new Runnable() {
 						
 						@Override
 						public void run() {
-							puzzle.updateDescription(actionArray.get(j));
+							puzzle.updateDescription(temp[1]);
 							puzzle.redraw();
+							
+							try {
+								sleep(400);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 							
 						}
 					});
@@ -108,10 +106,14 @@ public class EightPuzzleTimedGameWindow extends UIView {
 				}
 				
 			};
-			i++;
+			
+			
+		};
+		thread.start();
 
-			timer = new Timer();
-			timer.schedule(task, 500*i);
+//			Timer timer = new Timer();
+//			timer.schedule(task, currTimeout);
+//			currTimeout += timeout;
 		}
 //			String[] temp = a.getDescription().split("-->");
 //			
@@ -133,7 +135,7 @@ public class EightPuzzleTimedGameWindow extends UIView {
 //				e.printStackTrace();
 //			}
 //			
-		}
+		
 		
 	public void getSolution(){
 		action = "SD 8puzzle:" + description ;	

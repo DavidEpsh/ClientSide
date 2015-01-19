@@ -1,7 +1,5 @@
 package view;
 
-import java.util.Random;
-
 import model.Solution;
 import model.algorithm.Action;
 
@@ -17,8 +15,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
-import org.omg.CosNaming.IstringHelper;
-
 import presenter.Presenter;
 
 public class EightPuzzleSelectionWindow extends UIView {
@@ -71,7 +67,32 @@ public class EightPuzzleSelectionWindow extends UIView {
 		lstActions = new List(shell, SWT.BORDER | SWT.V_SCROLL);
 		lstActions.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 						
-
+		btnTimedGame.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				
+				action = "SD 8puzzle:" + txtGameDescription.getText() ;	
+				EightPuzzleSelectionWindow.this.setChanged();
+				EightPuzzleSelectionWindow.this.notifyObservers();	
+				
+				action = "GetNewGame";	
+				EightPuzzleSelectionWindow.this.setChanged();
+				EightPuzzleSelectionWindow.this.notifyObservers();	
+				
+				shell.dispose();
+				UIView window = new EightPuzzleTimedGameWindow( currPresenter, currDisplay, 500, 500, "HAVE FUN", description);
+				window.start();
+				window.run();
+				
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		 
 		btnUserGame.addSelectionListener(new SelectionListener() {
 			@Override
@@ -96,6 +117,7 @@ public class EightPuzzleSelectionWindow extends UIView {
 				
 			}
 		});
+		
 		comboPuzzleProperties.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
@@ -144,8 +166,6 @@ public class EightPuzzleSelectionWindow extends UIView {
 		// TODO Auto-generated method stub
 		
 	}
-	
-	
 
 	@Override
 	public void displaySolution(Solution solution) {
@@ -164,39 +184,6 @@ public class EightPuzzleSelectionWindow extends UIView {
 	@Override
 	public String getUserAction() {		
 		return action;
-	}
-	
-	@Override
-	public void displayTimedSolution() {
-		// TODO Auto-generated method stub
-		super.displayTimedSolution();
-	}
-	
-	public String createCustomGame(){
-		int[] tempIntegers;
-		int[] randArray;
-		String str = "";
-		tempIntegers = new int[]{1,2,3,4,5,6,7,8};
-		Random rand = new Random();
-		randArray = new int[9];
-		
-		for(int i=0 ; i<8 ; i++){
-			int r = rand.nextInt(9);
-			
-			if(randArray[r]==0)
-				randArray[r]= tempIntegers[i];
-			else
-				i--;
-		}
-		
-		for(int i=0 ; i<9 ; i++){
-			if(i==8)
-				str += Integer.toString(randArray[i]);
-			else
-				str += Integer.toString(randArray[i]) + ",";
-		}
-		
-		return str;
 	}
 
 	@Override

@@ -28,11 +28,16 @@ public class MazeWindow extends UIView {
 		 Button start = new Button(shell, SWT.PUSH);
 		 start.setLayoutData(new GridData(SWT.FILL,SWT.TOP,false,false,1,1));
 		 start.setText("start");
+		 
 		 Maze maze=new Maze(shell, SWT.BORDER);
 		 maze.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true	,1,2));
+		 
 		 Button stop = new Button(shell, SWT.PUSH);
 		 stop.setText("stop");
 		 stop.setLayoutData( new GridData(SWT.FILL,SWT.TOP,false,false,1,1));
+		 
+		 
+		 
 		 start.addSelectionListener(new SelectionListener() {
 			
 			@Override
@@ -47,7 +52,7 @@ public class MazeWindow extends UIView {
 			}
 		});
 		
-		stop.addSelectionListener(new SelectionListener() {
+	   	 stop.addSelectionListener(new SelectionListener() {
 			
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {

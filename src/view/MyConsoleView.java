@@ -48,4 +48,10 @@ public class MyConsoleView extends Observable implements View {
 		return action;
 	}
 
+	@Override
+	public void updateDescription(String description) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

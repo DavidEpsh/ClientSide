@@ -39,11 +39,11 @@ public class SelectGameWindow extends BasicWindow {
 				UIView window = new EightPuzzleSelectionWindow(presenter, display, 500, 500, "8puzzle Game");
 				window.run();
 				}
-		/*		else
-					UIView window = new MazeWindow(presenter, display, 400, 300, "Maze game");
+				else{
+					UIView window = new MazeWindow(presenter, display, 500, 500, "Maze game");
 					window.run();
 					}
-		*/
+		
 			}
 			
 			

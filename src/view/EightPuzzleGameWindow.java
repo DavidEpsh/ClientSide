@@ -193,8 +193,6 @@ public class EightPuzzleGameWindow extends UIView {
 				
 				window.run();
 				window.start();
-				
-				
 			}
 			
 			@Override
@@ -205,9 +203,4 @@ public class EightPuzzleGameWindow extends UIView {
 		});
 	}
 	
-	@Override
-	public void displayTimedSolution() {
-		// TODO Auto-generated method stub
-		super.displayTimedSolution();
-	}
 }
