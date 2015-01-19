@@ -12,14 +12,16 @@ import org.eclipse.swt.widgets.Display;
 
 import presenter.Presenter;
 
-public class MazeWindow extends UIView {
+public class MazeGameWindow extends UIView {
 
-	public MazeWindow(Presenter presenter, Display display, int x, int y, String title) {
+	public MazeGameWindow(Presenter presenter, Display display, int x, int y, String title,String description) {
 		super(presenter, display,  x, y, title);
 		
+		this.description = description;
 	}
 	
 	String action;
+	String description;
 
 	@Override
 	public void initWidgets() {
@@ -29,7 +31,7 @@ public class MazeWindow extends UIView {
 		 start.setLayoutData(new GridData(SWT.FILL,SWT.TOP,false,false,1,1));
 		 start.setText("start");
 		 
-		 Maze maze=new Maze(shell, SWT.BORDER);
+		 Maze maze=new Maze(shell, SWT.BORDER, description);
 		 maze.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true	,1,2));
 		 
 		 Button stop = new Button(shell, SWT.PUSH);
@@ -92,5 +94,8 @@ public class MazeWindow extends UIView {
 	public String getUserAction() {
 		return this.action;
 	}
-
+	
+	public void updateDescription(String description){
+		this.description = description;
+	}
 }

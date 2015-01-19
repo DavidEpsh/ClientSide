@@ -1,7 +1,5 @@
 package view;
 
-import java.awt.event.WindowStateListener;
-
 import model.Solution;
 import model.algorithm.Action;
 
@@ -18,7 +16,7 @@ import presenter.Presenter;
 
 public class EightPuzzleGameWindow extends UIView {
 	
-	public EightPuzzleGameWindow (Presenter presenter,Display display, int width, int height, String title,String description) {
+	public EightPuzzleGameWindow (Presenter presenter,Display display, int width, int height, String title, String description) {
 		super(presenter,display, width, height, title);	
 		
 		this.description = description;

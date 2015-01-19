@@ -14,25 +14,30 @@ import org.eclipse.swt.widgets.Composite;
 
 public class Maze extends Canvas {
 	
-	int[][] mazeData={
-			{0,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-			{1,0,0,0,0,0,0,0,1,1,0,1,0,0,1},
-			{0,0,1,1,1,1,1,0,0,1,0,1,0,1,1},
-			{1,1,1,0,0,0,1,0,1,1,0,1,0,0,1},
-			{1,0,1,0,1,1,1,0,0,0,0,1,1,0,1},
-			{1,1,0,0,0,1,0,0,1,1,1,1,0,0,1},
-			{1,0,0,1,0,0,1,0,0,0,0,1,0,1,1},
-			{1,0,1,1,0,1,1,0,1,1,0,0,0,1,1},
-			{1,0,0,0,0,0,0,0,0,1,0,1,0,0,1},
-			{1,1,1,1,1,1,1,1,1,1,1,1,0,1,1},
-		};
+//	int[][] mazeData={
+//			{0,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+//			{1,0,0,0,0,0,0,0,1,1,0,1,0,0,1},
+//			{0,0,1,1,1,1,1,0,0,1,0,1,0,1,1},
+//			{1,1,1,0,0,0,1,0,1,1,0,1,0,0,1},
+//			{1,0,1,0,1,1,1,0,0,0,0,1,1,0,1},
+//			{1,1,0,0,0,1,0,0,1,1,1,1,0,0,1},
+//			{1,0,0,1,0,0,1,0,0,0,0,1,0,1,1},
+//			{1,0,1,1,0,1,1,0,1,1,0,0,0,1,1},
+//			{1,0,0,0,0,0,0,0,0,1,0,1,0,0,1},
+//			{1,1,1,1,1,1,1,1,1,1,1,1,0,1,1},
+//		};
+	
+	int[][] mazeData;
 	GameCharacter c;
+	String description;
 	Timer timer;
 	TimerTask task;
 
 
-	public Maze(Composite parent, int style) {
+	public Maze(Composite parent, int style , String description) {
 		super(parent, style);
+		
+		this.description = description;
 		c = new GameCharacter(10, 10);
 		//set a white background (red,green,blue)
 		setBackground(new Color(null,255,255,255));
@@ -99,5 +104,11 @@ public class Maze extends Canvas {
 		if(timer != null)
 			timer.cancel();
 	}
+	
+	public void updateMazeData(){
+		String[] tempArray = description.split(",");
+		
+	}
+	
 
 }

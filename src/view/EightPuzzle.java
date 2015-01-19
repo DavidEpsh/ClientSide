@@ -1,17 +1,8 @@
 package view;
 
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.image.ImageObserver;
-import java.awt.image.ImageProducer;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.text.StyledEditorKit.AlignmentAction;
-
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
