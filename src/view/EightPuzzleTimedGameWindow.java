@@ -76,8 +76,7 @@ public class EightPuzzleTimedGameWindow extends UIView {
 	
 	@Override
 	public void displaySolution(Solution solution) {
-//		final int timeout = 500;
-//		int currTimeout = timeout;
+		
 		Thread thread = new Thread() {
 			@Override
 			public void run() {
@@ -110,31 +109,7 @@ public class EightPuzzleTimedGameWindow extends UIView {
 			
 		};
 		thread.start();
-
-//			Timer timer = new Timer();
-//			timer.schedule(task, currTimeout);
-//			currTimeout += timeout;
-		}
-//			String[] temp = a.getDescription().split("-->");
-//			
-//			shell.getDisplay().syncExec(new Runnable() {
-//				
-//				@Override
-//				public void run() {	
-//					puzzle.updateDescription(temp[1]);
-//					shell.redraw();
-//			//		lstActions.add(a.toString());
-//				}
-//				
-//			});	
-//			
-//			try {
-//				wait(500);
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			
+	}
 		
 		
 	public void getSolution(){

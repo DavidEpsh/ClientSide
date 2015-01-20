@@ -56,8 +56,12 @@ public class MazeSelectionWindow extends UIView {
 //		btnSearch.setText("Search");
 //		btnSearch.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
 		
+		Button btnShowTimedSolution = new Button(shell, SWT.PUSH);
+		btnShowTimedSolution.setText("Just Show Me The Solution");
+		btnShowTimedSolution.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 2, 1));
+		
 		Button btnUserGame = new Button(shell, SWT.PUSH);
-		btnUserGame.setText("Let's Start");
+		btnUserGame.setText("Let Me Play!");
 		btnUserGame.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 2, 1));
 		
 		lstActions = new List(shell, SWT.BORDER | SWT.V_SCROLL);
@@ -99,32 +103,42 @@ public class MazeSelectionWindow extends UIView {
 				// TODO Auto-generated method stub	
 			}
 		});
-	}
+	
 		 
-//		btnSearch.addSelectionListener(new SelectionListener() {
-//			
-//			@Override
-//			public void widgetSelected(SelectionEvent arg0) {	
-//
-//				action = "SD 8puzzle:" + txtGameDescription.getText() ;	
-//				MazeSelectionWindow.this.setChanged();
-//				MazeSelectionWindow.this.notifyObservers();	
-//				
-//				action = "SA " + comboAlgorithm.getText();
-//				MazeSelectionWindow.this.setChanged();
-//				MazeSelectionWindow.this.notifyObservers();	
-//				
-//				action = "SlD";
-//				MazeSelectionWindow.this.setChanged();
-//				MazeSelectionWindow.this.notifyObservers();	
-//			}
-//			
-//			@Override
-//			public void widgetDefaultSelected(SelectionEvent arg0) {
-//								
-//			}
-//		});
-//	}
+		btnShowTimedSolution.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {	
+
+				UIView window = new MazeGameWindow( currPresenter, currDisplay, 500, 500, "My 8puzzle Game", description);
+				window.run();
+				shell.dispose();
+				
+				if(txtGameDescription.equals("") || txtGameDescription == null){
+					action = "SD Maze:";
+					}
+				else{
+					action = "SD Maze:" + txtGameDescription.getText() ;
+					}
+				
+				MazeSelectionWindow.this.setChanged();
+				MazeSelectionWindow.this.notifyObservers();	
+				
+				action = "SA " + comboAlgorithm.getText();
+				MazeSelectionWindow.this.setChanged();
+				MazeSelectionWindow.this.notifyObservers();	
+				
+				action = "SlD";
+				MazeSelectionWindow.this.setChanged();
+				MazeSelectionWindow.this.notifyObservers();	
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+								
+			}
+		});
+	}
 
 	@Override
 	public void start() {		

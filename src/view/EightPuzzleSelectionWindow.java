@@ -26,6 +26,7 @@ public class EightPuzzleSelectionWindow extends UIView {
 	private String action;
 	String description;
 	private List lstActions;
+	private int[][] eightGameState;
 	
 	@Override
 	void initWidgets() {
@@ -102,7 +103,7 @@ public class EightPuzzleSelectionWindow extends UIView {
 				EightPuzzleSelectionWindow.this.setChanged();
 				EightPuzzleSelectionWindow.this.notifyObservers();	
 				
-				action = "GetNewGame";	
+				action = "GetNewGame";
 				EightPuzzleSelectionWindow.this.setChanged();
 				EightPuzzleSelectionWindow.this.notifyObservers();	
 				
@@ -190,4 +191,6 @@ public class EightPuzzleSelectionWindow extends UIView {
 	public void updateDescription(String description){
 		this.description = description;
 	}
+	
+	
 }
