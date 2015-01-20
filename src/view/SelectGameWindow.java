@@ -40,7 +40,7 @@ public class SelectGameWindow extends BasicWindow {
 				window.run();
 				}
 				else{
-					UIView window = new MazeSelectionWindow(presenter, display, 500, 500, "Maze game");
+					UIView window = new MazeSelectionWindow(presenter, display, 300, 300, "Maze game");
 					window.run();
 					}
 		
