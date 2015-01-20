@@ -31,8 +31,8 @@ public class Maze extends Canvas {
 		this.description = description;
 		updateMazeData();
 		c = new GameCharacter(10, 10);
-		//set a white background (red,green,blue)
 		setBackground(new Color(null,0,0,0));
+		
 		addPaintListener(new PaintListener() {
 			
 			@Override
@@ -46,15 +46,20 @@ public class Maze extends Canvas {
 				 int w=width/mazeData[0].length;
 				 int h=height/mazeData.length;
 
-				 for(int i=0;i<mazeData.length;i++)
+				 for(int i=0;i<mazeData.length;i++){
 				    for(int j=0;j<mazeData[i].length;j++){
 				        int x=j*w;
 				        int y=i*h;
 				        if(mazeData[i][j]==1 || (i==0&&j==0) || (i==mazeLength-1 && j== mazeWidth-1))
 				            e.gc.fillRectangle(x,y,w,h);
 				    }
+				 }
 				 
+				 c.setX(currentState[0]);
+				 c.setY(currentState[1]);
 				 c.paint(e, w, h);
+				 
+
 				}
 			});
 		addDisposeListener(new DisposeListener() {
@@ -114,6 +119,7 @@ public class Maze extends Canvas {
 		else{
 			currentState[1]++;
 		}
+		
 	}
 	
 	public void left(){
@@ -122,6 +128,8 @@ public class Maze extends Canvas {
 		else{
 			currentState[0]--;
 		}
+		
+
 	}
 	
 	public void right(){
@@ -130,6 +138,8 @@ public class Maze extends Canvas {
 		else{
 			currentState[0]++;
 		}
+		
+		
 	}
 	
 	public void updateMazeData(){

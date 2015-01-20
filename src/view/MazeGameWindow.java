@@ -120,7 +120,9 @@ public class MazeGameWindow extends UIView {
 				
 				@Override
 				public void widgetSelected(SelectionEvent arg0) {
+					
 					maze.right();
+					
 					maze.redraw();
 				}
 				

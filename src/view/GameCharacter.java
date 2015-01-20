@@ -16,8 +16,17 @@ class GameCharacter{
 	   
 	 
 	   public void paint(PaintEvent e,int w,int h){
-		e.gc.setForeground(new Color(null,255,0,0));
-		//e.gc.drawImage(image, srcX, srcY, srcWidth, srcHeight, destX, destY, destWidth, destHeight);
+//		e.gc.setForeground(new Color(null,0,0,0));
+
+		e.gc.drawImage(image, 0, 0, image.getBounds().width, image.getBounds().height , x*w, y*h, w, h);
+	   }
+	   
+	   public void setX(int x){
+		   this. x = x;
+	   }
+	   
+	   public void setY(int y){
+		   this.y = y;
 	   }
 	   
 	   // to do: add x and y functions;
