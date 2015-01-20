@@ -148,7 +148,7 @@ public class Maze extends Canvas {
 		mazeWidth = Integer.parseInt(tempArray[1]);
 		
 		mazeData = new int[mazeLength][mazeWidth];
-		int k =0;
+		int k =2;
 		for(int i=0; i<mazeLength; i++){
 			for(int j=0 ; j<mazeWidth ; j++){
 				mazeData[i][j] = Integer.parseInt(tempArray[k]);
@@ -160,9 +160,11 @@ public class Maze extends Canvas {
 	
 	public void updateDescription(){
 		String temp="";
-		int k =0;
-		temp += Integer.toString(currentState[0]);
-		temp += Integer.toString(currentState[1]);
+		int k =4;
+		temp += Integer.toString(currentState[0]) + ",";
+		temp += Integer.toString(currentState[1]) + ",";
+		temp += Integer.toString(mazeLength) + ",";
+		temp += Integer.toString(mazeWidth) + ",";
 		
 		for(int i=0; i<mazeLength; i++){
 			for(int j=0 ; j<mazeWidth ; j++){
@@ -177,6 +179,14 @@ public class Maze extends Canvas {
 		}
 		
 		description = temp;
+	}
+	
+	public void resetMaze(String description){
+		this.description = description;
+		updateMazeData();
+		currentState[0] = 0;
+		currentState[1] = 0;
+		redraw();
 	}
 
 }

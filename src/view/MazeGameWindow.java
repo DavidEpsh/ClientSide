@@ -174,6 +174,31 @@ public class MazeGameWindow extends UIView {
 				
 			}
 		});
+	
+	   	 reset.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				action = "SD Maze:" ;	
+				MazeGameWindow.this.setChanged();
+				MazeGameWindow.this.notifyObservers();	
+				
+				action = "GetNewGame";	
+				MazeGameWindow.this.setChanged();
+				MazeGameWindow.this.notifyObservers();	
+			
+				
+				maze.resetMaze(description);
+				
+				
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
 		
 	@Override
