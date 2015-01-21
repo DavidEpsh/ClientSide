@@ -31,8 +31,8 @@ public class Maze extends Canvas {
 		this.description = description;
 		updateMazeData();
 		c = new GameCharacter(10, 10);
-		//set a white background (red,green,blue)
 		setBackground(new Color(null,0,0,0));
+		
 		addPaintListener(new PaintListener() {
 			
 			@Override
@@ -46,15 +46,21 @@ public class Maze extends Canvas {
 				 int len=length/mazeData[0].length;
 				 int h=height/mazeData.length;
 
-				 for(int y1=0 ;y1<mazeData.length ;y1++)
+				 for(int y1=0 ;y1<mazeData.length ;y1++){
 				    for(int x1=0 ; x1<mazeData[0].length ; x1++){
 				        int x=x1*len;
 				        int y=y1*h;
 				        if(mazeData[y1][x1]==1 || (y1==0&&x1==0) || (x1==mazeLength-1 && y1== mazeHeigth-1))
 				            e.gc.fillRectangle(x,y,len,h);
+
 				    }
+				 }
 				 
-				 c.paint(e, len, h);
+
+					c.setX(currentState[0]);
+					c.setY(currentState[1]);
+				    c.paint(e, len, h);
+
 				}
 			});
 		addDisposeListener(new DisposeListener() {
@@ -114,6 +120,7 @@ public class Maze extends Canvas {
 		else{
 			currentState[1]++;
 		}
+		
 	}
 	
 	public void left(){
@@ -122,6 +129,8 @@ public class Maze extends Canvas {
 		else{
 			currentState[0]--;
 		}
+		
+
 	}
 	
 	public void right(){
@@ -130,6 +139,8 @@ public class Maze extends Canvas {
 		else{
 			currentState[0]++;
 		}
+		
+		
 	}
 	
 	public void updateMazeData(){
@@ -138,7 +149,7 @@ public class Maze extends Canvas {
 		mazeHeigth = Integer.parseInt(tempArray[1]);
 		
 		mazeData = new int[mazeHeigth][mazeLength];
-		int k =0;
+		int k =2;
 		for(int y=0 ; y<mazeHeigth ; y++){
 			for(int x=0; x<mazeLength; x++){
 				mazeData[y][x] = Integer.parseInt(tempArray[k++]);
@@ -148,9 +159,11 @@ public class Maze extends Canvas {
 	
 	public void updateDescription(){
 		String temp="";
-		int k =0;
-		temp += Integer.toString(currentState[0]);
-		temp += Integer.toString(currentState[1]);
+		int k =4;
+		temp += Integer.toString(currentState[0]) + ",";
+		temp += Integer.toString(currentState[1]) + ",";
+		temp += Integer.toString(mazeLength) + ",";
+		temp += Integer.toString(mazeHeigth) + ",";
 		
 		for(int y=0; y<mazeHeigth; y++){
 			for(int x=0 ; x<mazeLength ; x++){
@@ -165,6 +178,14 @@ public class Maze extends Canvas {
 		}
 		
 		description = temp;
+	}
+	
+	public void resetMaze(String description){
+		this.description = description;
+		updateMazeData();
+		currentState[0] = 0;
+		currentState[1] = 0;
+		redraw();
 	}
 
 }

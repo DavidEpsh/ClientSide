@@ -30,13 +30,14 @@ public class MazeSelectionWindow extends UIView {
 	@Override
 	void initWidgets() {
 		
-		shell.setLayout(new GridLayout(2, false));
+		shell.setLayout(new GridLayout(1, false));
 
 		Label lblProperties = new Label(shell, SWT.NONE);
+		lblProperties.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
 		lblProperties.setText("Choose game properties: ");
 		
 		final Combo comboPuzzleProperties = new Combo(shell, SWT.READ_ONLY);	
-		comboPuzzleProperties.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false));
+		comboPuzzleProperties.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
 	    String itemsProperties[] = { "Random", "User Defind" };
 	    comboPuzzleProperties.setItems(itemsProperties);
 	    
@@ -44,28 +45,9 @@ public class MazeSelectionWindow extends UIView {
 		txtGameDescription.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true ,2, 1));
 		txtGameDescription.setEnabled(false);
 		
-		Label lblAlgorithm = new Label(shell, SWT.NONE);
-		lblAlgorithm.setText("Choose algorithm: ");
-		
-		final Combo comboAlgorithm = new Combo(shell, SWT.READ_ONLY);	
-		comboAlgorithm.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false));
-	    String itemsAlgorithm[] = { "BFS", "AStar" };
-	    comboAlgorithm.setItems(itemsAlgorithm);
-		
-//		Button btnSearch = new Button(shell, SWT.PUSH);
-//		btnSearch.setText("Search");
-//		btnSearch.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-		
-		Button btnShowTimedSolution = new Button(shell, SWT.PUSH);
-		btnShowTimedSolution.setText("Just Show Me The Solution");
-		btnShowTimedSolution.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 2, 1));
-		
 		Button btnUserGame = new Button(shell, SWT.PUSH);
 		btnUserGame.setText("Let Me Play!");
 		btnUserGame.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 2, 1));
-		
-		lstActions = new List(shell, SWT.BORDER | SWT.V_SCROLL);
-		lstActions.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 						
 		btnUserGame.addSelectionListener(new SelectionListener() {
 			@Override
@@ -86,7 +68,17 @@ public class MazeSelectionWindow extends UIView {
 			
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
-				// TODO Auto-generated method stub
+				action = "SD Maze:";	
+				MazeSelectionWindow.this.setChanged();
+				MazeSelectionWindow.this.notifyObservers();	
+				
+				action = "GetNewGame";	
+				MazeSelectionWindow.this.setChanged();
+				MazeSelectionWindow.this.notifyObservers();	
+				
+				UIView window = new MazeGameWindow( currPresenter, currDisplay, 500, 500, "My 8puzzle Game", description);
+				window.run();
+				shell.dispose();
 				
 			}
 		});
@@ -101,41 +93,6 @@ public class MazeSelectionWindow extends UIView {
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
 				// TODO Auto-generated method stub	
-			}
-		});
-	
-		 
-		btnShowTimedSolution.addSelectionListener(new SelectionListener() {
-			
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {	
-
-				UIView window = new MazeGameWindow( currPresenter, currDisplay, 500, 500, "My 8puzzle Game", description);
-				window.run();
-				shell.dispose();
-				
-				if(txtGameDescription.equals("") || txtGameDescription == null){
-					action = "SD Maze:";
-					}
-				else{
-					action = "SD Maze:" + txtGameDescription.getText() ;
-					}
-				
-				MazeSelectionWindow.this.setChanged();
-				MazeSelectionWindow.this.notifyObservers();	
-				
-				action = "SA " + comboAlgorithm.getText();
-				MazeSelectionWindow.this.setChanged();
-				MazeSelectionWindow.this.notifyObservers();	
-				
-				action = "SlD";
-				MazeSelectionWindow.this.setChanged();
-				MazeSelectionWindow.this.notifyObservers();	
-			}
-			
-			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {
-								
 			}
 		});
 	}

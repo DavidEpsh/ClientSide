@@ -120,7 +120,9 @@ public class MazeGameWindow extends UIView {
 				
 				@Override
 				public void widgetSelected(SelectionEvent arg0) {
+					
 					maze.right();
+					
 					maze.redraw();
 				}
 				
@@ -163,6 +165,31 @@ public class MazeGameWindow extends UIView {
 				action = "SlD";
 				MazeGameWindow.this.setChanged();
 				MazeGameWindow.this.notifyObservers();
+				
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	
+	   	 reset.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				action = "SD Maze:" ;	
+				MazeGameWindow.this.setChanged();
+				MazeGameWindow.this.notifyObservers();	
+				
+				action = "GetNewGame";	
+				MazeGameWindow.this.setChanged();
+				MazeGameWindow.this.notifyObservers();	
+			
+				
+				maze.resetMaze(description);
+				
 				
 			}
 			

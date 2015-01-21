@@ -236,9 +236,12 @@ public class MyModel extends Observable implements Model {
 				if(x==length-1 && y== height-1){
 					mazeGameDescription += Integer.toString(maze[y][x]);
 					}
-				
+
+				else{
 				mazeGameDescription += Integer.toString(maze[y][x]) + ","; 	
+
 				}
+			  }
 			}
 		
 		description =mazeGameDescription;
