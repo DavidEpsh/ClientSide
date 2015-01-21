@@ -5,11 +5,15 @@ import java.util.Observer;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import model.Solution;
 import model.algorithm.Action;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -27,12 +31,15 @@ public class EightPuzzleTimedGameWindow extends UIView {
 		this.presenter = presenter;
 		this.display = display;
 }
+	
+	Thread thread;
 	Display display;
 	Presenter presenter;
 	String action;
 	String description;
 	TimerTask task;
 	EightPuzzle puzzle;
+	boolean keepGoing = true;
 	
 	@Override
 	public void start() {
@@ -72,12 +79,62 @@ public class EightPuzzleTimedGameWindow extends UIView {
 		btnClose.setText("Close");
 		btnClose.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1,1));
 
+		btnPause.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				synchronized (puzzle) {
+					try {
+						wait();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+			}
+		});
+		
+		btnContinue.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				synchronized (puzzle) {
+					notify();
+				}
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+			}
+		});
+		
+		btnClose.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				shell.dispose();
+				
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
 	
 	@Override
 	public void displaySolution(Solution solution) {
-		
-		Thread thread = new Thread() {
+		synchronized (puzzle) {
+			
+		thread = new Thread() {
 			@Override
 			public void run() {
 				
@@ -108,8 +165,11 @@ public class EightPuzzleTimedGameWindow extends UIView {
 			
 			
 		};
+		
 		thread.start();
-	}
+	}// end of synchronize
+	}//end of function 
+	
 		
 		
 	public void getSolution(){

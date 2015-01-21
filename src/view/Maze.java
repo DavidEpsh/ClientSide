@@ -22,7 +22,7 @@ public class Maze extends Canvas {
 	TimerTask task;
 	int[] currentState = new int[]{0,0};
 	int mazeLength;
-	int mazeWidth;
+	int mazeHeigth;
 
 
 	public Maze(Composite parent, int style , String description) {
@@ -40,21 +40,21 @@ public class Maze extends Canvas {
 				 e.gc.setForeground(new Color(null,255,255,255));
 				 e.gc.setBackground(new Color(null,255,255,255));
 
-				 int width=getSize().x;
+				 int length=getSize().x;
 				 int height=getSize().y;
 
-				 int w=width/mazeData[0].length;
+				 int len=length/mazeData[0].length;
 				 int h=height/mazeData.length;
 
-				 for(int i=0;i<mazeData.length;i++)
-				    for(int j=0;j<mazeData[i].length;j++){
-				        int x=j*w;
-				        int y=i*h;
-				        if(mazeData[i][j]==1 || (i==0&&j==0) || (i==mazeLength-1 && j== mazeWidth-1))
-				            e.gc.fillRectangle(x,y,w,h);
+				 for(int y1=0 ;y1<mazeData.length ;y1++)
+				    for(int x1=0 ; x1<mazeData[0].length ; x1++){
+				        int x=x1*len;
+				        int y=y1*h;
+				        if(mazeData[y1][x1]==1 || (y1==0&&x1==0) || (x1==mazeLength-1 && y1== mazeHeigth-1))
+				            e.gc.fillRectangle(x,y,len,h);
 				    }
 				 
-				 c.paint(e, w, h);
+				 c.paint(e, len, h);
 				}
 			});
 		addDisposeListener(new DisposeListener() {
@@ -67,28 +67,28 @@ public class Maze extends Canvas {
 		
 		}
 	
-	public void start() {
-		timer = new Timer();
-		task = new TimerTask() {
-			
-			@Override
-			public void run() {
-				getDisplay().syncExec(new Runnable() {
-					
-					@Override
-					public void run() {
-						Random r = new Random();
-						c.x += -5 + r.nextInt(11);
-						c.y += -5 + r.nextInt(11);
-						redraw();
-					}
-				});
-
-			}
-		};
-		timer.scheduleAtFixedRate(task, 0, 500);
-
-	}
+//	public void start() {
+//		timer = new Timer();
+//		task = new TimerTask() {
+//			
+//			@Override
+//			public void run() {
+//				getDisplay().syncExec(new Runnable() {
+//					
+//					@Override
+//					public void run() {
+//						Random r = new Random();
+//						c.x += -5 + r.nextInt(11);
+//						c.y += -5 + r.nextInt(11);
+//						redraw();
+//					}
+//				});
+//
+//			}
+//		};
+//		timer.scheduleAtFixedRate(task, 0, 500);
+//
+//	}
 	
 	public void stop() {
 		if(task != null)
@@ -109,7 +109,7 @@ public class Maze extends Canvas {
 	}
 	
 	public void down(){
-		if(currentState[1]==mazeWidth-1)
+		if(currentState[1]==mazeHeigth-1)
 			return;
 		else{
 			currentState[1]++;
@@ -135,17 +135,15 @@ public class Maze extends Canvas {
 	public void updateMazeData(){
 		String[] tempArray = description.split(",");
 		mazeLength = Integer.parseInt(tempArray[0]);
-		mazeWidth = Integer.parseInt(tempArray[1]);
+		mazeHeigth = Integer.parseInt(tempArray[1]);
 		
-		mazeData = new int[mazeLength][mazeWidth];
+		mazeData = new int[mazeHeigth][mazeLength];
 		int k =0;
-		for(int i=0; i<mazeLength; i++){
-			for(int j=0 ; j<mazeWidth ; j++){
-				mazeData[i][j] = Integer.parseInt(tempArray[k]);
-				k++;
+		for(int y=0 ; y<mazeHeigth ; y++){
+			for(int x=0; x<mazeLength; x++){
+				mazeData[y][x] = Integer.parseInt(tempArray[k++]);
 			}
 		}
-		
 	}
 	
 	public void updateDescription(){
@@ -154,13 +152,13 @@ public class Maze extends Canvas {
 		temp += Integer.toString(currentState[0]);
 		temp += Integer.toString(currentState[1]);
 		
-		for(int i=0; i<mazeLength; i++){
-			for(int j=0 ; j<mazeWidth ; j++){
-				if(i==mazeLength-1 && j== mazeWidth-1){
-					temp += mazeData[i][j];
+		for(int y=0; y<mazeHeigth; y++){
+			for(int x=0 ; x<mazeLength ; x++){
+				if(y== mazeHeigth && x== mazeLength-1){
+					temp += mazeData[y][x];
 					}
 				else{
-					temp += mazeData[i][j] + ",";
+					temp += mazeData[y][x] + ",";
 					k++;
 				}
 			}

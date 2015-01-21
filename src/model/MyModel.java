@@ -104,18 +104,17 @@ public class MyModel extends Observable implements Model {
 	
 	public void createRandomEightPuzzleState() {     // Default Constructor when puzzle not given
 		int[][] eightGameState = new int[3][3];
-		int [] tempIntegers;
-		tempIntegers = new int[]{1,2,3,4,5,6,7,8};
-		
+		int [] tempIntegers = new int[]{1,2,3,4,5,6,7,8};
+		// ArrayList<Integer> temp = new ArrayList<Integer>(){1,2,3,4,5,6,7,8,0};
 		for ( int i=0 ; i<8 ; i++){
 			int rX = (int)(Math.random()*3);
 			int rY = (int)(Math.random()*3);
 			
-			if (eightGameState[rX][rY] == 0)
-				eightGameState[rX][rY]=tempIntegers[i];
+			if (eightGameState[rY][rX] == 0)
+				eightGameState[rY][rX]=tempIntegers[i];
 			else
 				i--;
-		}
+			}
 		
 		if(!isSolvable(eightGameState)){
 			createRandomEightPuzzleState();
@@ -148,40 +147,38 @@ public class MyModel extends Observable implements Model {
 	}
 	
 	public boolean isSolvable(int[][] eightGame){
-		
-		
-		int distance=0,tempInt;
-		
-		for(int x=0 ; x<3 ; x++){
+
+			int[][] goalState = new int[][]{{1,2,3},{4,5,6},{7,8,0}};
+			int distance=0,tempInt;
+			
 			for (int y=0 ; y<3 ; y++){
-				if(eightGame[x][y]==0)
-					continue;
-				
-				tempInt = eightGame[x][y];
-				
-				for (int i=0 ; i<3 ; i++){
-					for (int j=0 ; j<3 ; j++){
-						if (tempInt == eightGame[i][j])
-							distance += Math.abs(i-x)+Math.abs(y-j);
+				for(int x=0 ; x<3 ; x++){	
+					if(eightGame[y][x]==0)
+						continue;
+					
+					tempInt = eightGame[y][x];
+					
+					for (int y1=0 ; y1<3 ; y1++){
+						for (int x1=0 ; x1<3 ; x1++){
+							if (tempInt == goalState[y1][x1])
+								distance += Math.abs(x1-x)+Math.abs(y1-y);
+						}
 					}
 				}
 			}
-		}
-		if (distance == 1)
-			return true;
 		
-			return distance%2==0; 
+			return (distance%2==0 || distance == 1); 
 		}
 	
 	public void updateDescription(int[][] gameDescription, int x, int y){
 		String temp =  "";
-		for(int i=0 ; i<x ; i++){
-			for (int j=0 ; j<y ; j++){
-				if(i == x-1 && j == y-1){
-					temp += Integer.toString(gameDescription[i][j]);
+		for(int y1=0 ; y1<y ; y1++){
+			for (int x1=0 ; x1<x ; x1++){
+				if(x1 == x-1 && y1 == y-1){
+					temp += Integer.toString(gameDescription[y1][x1]);
 				}
 				else{
-				temp += Integer.toString(gameDescription[i][j])+",";
+				temp += Integer.toString(gameDescription[y1][x1])+",";
 				}
 			}
 		}
@@ -193,33 +190,33 @@ public class MyModel extends Observable implements Model {
 		
 		String[] mazeProperties = args.split(",");
 		int length = Integer.parseInt( mazeProperties[0] );
-		int width = Integer.parseInt( mazeProperties[1] );
+		int heigth = Integer.parseInt( mazeProperties[1] );
 		int blocks = Integer.parseInt( mazeProperties[2] );
 			
-		int[][] maze= new int[length][width];
+		int[][] maze= new int[heigth][length];
 		
-		for(int i=0 ; i<length ; i++) {
-			for (int j=0; j<width ; j++ ){
-				maze[i][j]=1;
+		for (int y=0; y<heigth ; y++ ){
+			for(int x=0 ; x<length ; x++) {
+				maze[y][x]=1;
 			}
 		}
 		
-		for (int x=0 ; x < blocks ; x++){
+		for (int k=0 ; k < blocks ; k++){
 			int rX = (int) (Math.random()*length);
-			int rY = (int) (Math.random()*width);
+			int rY = (int) (Math.random()*heigth);
 			
-			if ((rX==0 && rY==0) || (rX == length-1 && rY == width -1 ) ){
-				x--;
+			if ((rX==0 && rY==0) || (rX == length-1 && rY == heigth -1 ) ){
+				k--;
 			}
 			
-			else if (maze[rX][rY]==1)
-						maze[rX][rY]=0;
+			else if (maze[rY][rX]==1)
+						maze[rY][rX]=0;
 			
 			else 
-				x--;
+				k--;
 		}
 		
-		setMazeGameDescription(length,width,maze);
+		setMazeGameDescription(length,heigth,maze);
 		
 	}
 	
@@ -228,21 +225,19 @@ public class MyModel extends Observable implements Model {
 		
 	}
 	
-	public void setMazeGameDescription(int length, int width, int[][] maze){
+	public void setMazeGameDescription(int length, int height, int[][] maze){
 		
 		String mazeGameDescription = "";
 		mazeGameDescription += Integer.toString(length)+",";
-		mazeGameDescription += Integer.toString(width)+",";
-		
-		
-		for (int i =0 ; i<length ; i++){
-			for(int j=0 ; j<width ; j++){
-				
-				if(i==length-1 && j== width-1){
-					mazeGameDescription += Integer.toString(maze[i][j]);
+		mazeGameDescription += Integer.toString(height)+",";
+
+		for(int y=0 ; y<height ; y++){
+			for (int x =0 ; x<length ; x++){
+				if(x==length-1 && y== height-1){
+					mazeGameDescription += Integer.toString(maze[y][x]);
 					}
 				
-				mazeGameDescription += Integer.toString(maze[i][j]) + ","; 	
+				mazeGameDescription += Integer.toString(maze[y][x]) + ","; 	
 				}
 			}
 		

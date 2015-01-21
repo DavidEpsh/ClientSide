@@ -17,7 +17,7 @@ class GameCharacter{
 	 
 	   public void paint(PaintEvent e,int w,int h){
 		e.gc.setForeground(new Color(null,255,0,0));
-		//e.gc.drawImage(image, srcX, srcY, srcWidth, srcHeight, destX, destY, destWidth, destHeight);
+		e.gc.drawImage(image,0,0, image.getBounds().width, image.getBounds().height, x, y, w, h);
 	   }
 	   
 	   // to do: add x and y functions;

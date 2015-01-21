@@ -41,10 +41,10 @@ public class EightPuzzle extends Canvas{
 				 int h=height/3;
 
 				 int k=0;
-				 for(int i=0;i<3;i++)
-				    for(int j=0;j<3;j++){
-				    	int x=j*w;
-				        int y=i*h;
+				 for(int y1=0;y1<3;y1++)
+				    for(int x1=0;x1<3;x1++){
+				    	int x=x1*w;
+				        int y=y1*h;
 				        e.gc.drawText(descriptionArray[k], x , y );
 				        k++;
 				    }
