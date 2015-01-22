@@ -1,5 +1,7 @@
 package view;
 
+import java.util.ArrayList;
+
 import model.Solution;
 import model.algorithm.Action;
 
@@ -13,11 +15,13 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 
 import presenter.Presenter;
 
-public class MazeGameWindow extends UIView implements KeyListener {
+public class MazeGameWindow extends UIView {
 
 	public MazeGameWindow(Presenter presenter, Display display, int x, int y, String title,String description) {
 		super(presenter, display,  x, y, title);
@@ -27,7 +31,8 @@ public class MazeGameWindow extends UIView implements KeyListener {
 	Maze maze;
 	String action;
 	String description;
-
+	boolean keepGoing = true;
+	
 	@Override
 	public void initWidgets() {
 		 shell.setLayout(new GridLayout(4, false));
@@ -38,6 +43,7 @@ public class MazeGameWindow extends UIView implements KeyListener {
 		 
 		 maze=new Maze(shell, SWT.BORDER, description);
 		 maze.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,1,8));
+		 maze.setFocus();
 		 
 		 Button btnLeft = new Button(shell, SWT.PUSH);
 		 btnLeft.setText("Left");
@@ -64,6 +70,14 @@ public class MazeGameWindow extends UIView implements KeyListener {
 		 btnShowTimedSolution.setText("Show Me Step By Step");
 		 btnShowTimedSolution.setLayoutData( new GridData(SWT.FILL,SWT.TOP,false,false,3,1));
 		 
+		 Button pause = new Button(shell, SWT.PUSH);
+		 pause.setText("pause");
+		 pause.setLayoutData( new GridData(SWT.FILL,SWT.TOP,false,false,3,1));
+		 
+		 Button moveOn = new Button(shell, SWT.PUSH);
+		 moveOn.setText("continue");
+		 moveOn.setLayoutData( new GridData(SWT.FILL,SWT.TOP,false,false,3,1));
+		 
 		 Button stop = new Button(shell, SWT.PUSH);
 		 stop.setText("stop");
 		 stop.setLayoutData( new GridData(SWT.FILL,SWT.TOP,false,false,3,1));
@@ -71,6 +85,31 @@ public class MazeGameWindow extends UIView implements KeyListener {
 		 Button reset = new Button(shell, SWT.PUSH);
 		 reset.setText("Reset Game");
 		 reset.setLayoutData( new GridData(SWT.FILL,SWT.TOP,false,false,3,1));
+		 
+		 
+		 moveOn.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				keepGoing = true;
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+			}
+		});
+		 
+		 pause.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				keepGoing = false;
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+			}
+		});
 		 
 		 btnUp.addKeyListener(new KeyListener() {
 			
@@ -249,40 +288,47 @@ public class MazeGameWindow extends UIView implements KeyListener {
 
 	@Override
 	public void displaySolution(Solution solution) {
+		
+		int len = solution.getLength();
+		ArrayList<Action> actions = solution.getActions();		
 		Thread thread = new Thread() {
 			@Override
 			public void run() {
 				
-				for (Action a : solution.getActions()) {
-			
-					String[] temp = a.getDescription().split("-->");
-					String[] tempState = temp[1].split(",");
-					int[] currState = new int[]{Integer.parseInt(tempState[0]),Integer.parseInt(tempState[1])};
-					shell.getDisplay().syncExec(new Runnable() {
+				for (int i=0; i<len ; i++) {
+					if(keepGoing == true){
 						
-						@Override
-						public void run() {
-							maze.setCurrentstate(currState);
-							maze.redraw();
-							
-							try {
-								sleep(400);
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-							
-						}
-					});
+						Action a = actions.get(i);
+						String[] temp = a.getDescription().split("-->");
+						String[] tempState = temp[1].split(",");
+						int[] currState = new int[]{Integer.parseInt(tempState[0]),Integer.parseInt(tempState[1])};
+						shell.getDisplay().syncExec(new Runnable() {
 
+							@Override
+							public void run() {
+								maze.setCurrentstate(currState);
+								maze.redraw();
+							}
+						});
+						
+					}
+					else{
+						i--;
+					}
+					try {
+						sleep(400);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
-				
+
 			};
-			
-			
+
+
 		};
 		thread.start();
-		
+
 	}
 
 	@Override
@@ -293,34 +339,9 @@ public class MazeGameWindow extends UIView implements KeyListener {
 	public void updateDescription(String description){
 		this.description = description;
 	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-//		if(e.keyCode == SWT.RIGHT){
-//			
-//			maze.right();
-//			maze.redraw();
-//		}
-//		else if (e.keyCode == SWT.LEFT){
-//			maze.left();
-//			maze.redraw();
-//		}
-//		else if (e.keyCode == SWT.UP){
-//			maze.up();
-//			maze.redraw();
-//		}
-//		else if (e.keyCode == SWT.DOWN){
-//			maze.down();
-//			maze.redraw();
-//		}
-		
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
+

@@ -4,15 +4,19 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.MessageBox;
 
-public class Maze extends Canvas {
+public class Maze extends Canvas implements KeyListener{
 	
 	int[][] mazeData;
 	String action;
@@ -55,13 +59,18 @@ public class Maze extends Canvas {
 
 				    }
 				 }
-				 
-
 					c.setX(currentState[0]);
 					c.setY(currentState[1]);
 					c.setXM(mazeData[0].length-1);
 					c.setYM(mazeData.length-1);
 				    c.paint(e, len, h);
+				    
+				    if(currentState[0]==mazeData[0].length-1 && currentState[1] == mazeData.length-1)
+					{
+						MessageBox messageBox = new MessageBox(getShell(), SWT.ICON_WORKING);
+					    messageBox.setMessage("You Found Your Mommy !!!!");
+					    messageBox.open();
+					}
 
 				}
 			});
@@ -73,30 +82,74 @@ public class Maze extends Canvas {
 			}
 		});
 		
-		}
-	
-//	public void start() {
-//		timer = new Timer();
-//		task = new TimerTask() {
-//			
-//			@Override
-//			public void run() {
-//				getDisplay().syncExec(new Runnable() {
-//					
-//					@Override
-//					public void run() {
-//						Random r = new Random();
-//						c.x += -5 + r.nextInt(11);
-//						c.y += -5 + r.nextInt(11);
-//						redraw();
-//					}
-//				});
-//
-//			}
-//		};
-//		timer.scheduleAtFixedRate(task, 0, 500);
-//
-//	}
+		addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+
+				getDisplay().syncExec(new Runnable() {
+
+					@Override
+					public void run() {
+
+						if(e.keyCode == SWT.ARROW_RIGHT){
+
+							right();
+							
+							getDisplay().syncExec(new Runnable()
+							{	
+								@Override
+								public void run() 
+								{
+									redraw();
+								}
+							});
+						}
+						else if (e.keyCode == SWT.ARROW_LEFT){
+							left();
+							getDisplay().syncExec(new Runnable()
+							{	
+								@Override
+								public void run() 
+								{
+									redraw();
+								}
+							});
+						}
+						else if (e.keyCode == SWT.ARROW_UP){
+							up();
+							getDisplay().syncExec(new Runnable()
+							{	
+								@Override
+								public void run() 
+								{
+									redraw();
+								}
+							});
+						}
+						else if (e.keyCode == SWT.ARROW_DOWN){
+							down();
+							getDisplay().syncExec(new Runnable()
+							{	
+								@Override
+								public void run() 
+								{
+									redraw();
+								}
+							});
+						}
+
+					}
+				});
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+	}
 	
 	public void stop() {
 		if(task != null)
@@ -122,7 +175,6 @@ public class Maze extends Canvas {
 		else{
 			currentState[1]++;
 		}
-		
 	}
 	
 	public void left(){
@@ -141,8 +193,6 @@ public class Maze extends Canvas {
 		else{
 			currentState[0]++;
 		}
-		
-		
 	}
 	
 	public void updateMazeData(){
@@ -189,5 +239,18 @@ public class Maze extends Canvas {
 		currentState[1] = 0;
 		redraw();
 	}
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+ 
 
 }

@@ -61,7 +61,7 @@ public class MazeSelectionWindow extends UIView {
 				MazeSelectionWindow.this.setChanged();
 				MazeSelectionWindow.this.notifyObservers();	
 				
-				UIView window = new MazeGameWindow( currPresenter, currDisplay, 500, 500, "My 8puzzle Game", description);
+				UIView window = new MazeGameWindow( currPresenter, currDisplay, 500, 500, "HAVE FUN", description);
 				window.run();
 				shell.dispose();
 			}
