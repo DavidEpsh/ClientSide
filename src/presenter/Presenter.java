@@ -74,13 +74,11 @@ public class Presenter implements Observer {
 	
 	public static void main(String[] args) {
 		MyModel model = new MyModel();
-		//MyConsoleView view = new MyConsoleView();
 		
 		Presenter presenter = new Presenter(model);
 		SelectGameWindow view = new SelectGameWindow(presenter, 400, 400, "Select game");
 		
 		model.addObserver(presenter);
-//		view.addObserver(presenter);
 		
 		view.run();
 	}

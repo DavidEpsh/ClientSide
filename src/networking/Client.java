@@ -16,7 +16,13 @@ public class Client {
 		this.serverAddress = "127.0.0.1";
 		this.port = 8000;
 	}
-	
+	/**
+	 * initializes a connection with a server
+	 * sends the server a problem that was defined by the user
+	 * waits to receive a solution from the server
+	 * @param problem
+	 * @return return the solution that was sent by the server
+	 */
 	public Solution getSolution(Problem problem) {		
 		Socket socket = null;
 		ObjectInputStream in = null;
@@ -51,37 +57,4 @@ public class Client {
 		return null;
 	}
 	
-	public String getNewGame(Problem problem) {		
-		Socket socket = null;
-		ObjectInputStream in = null;
-		ObjectOutputStream out = null;
-		
-		//System.out.println("Send new problem: " + problem.getDomainName());
-		
-		try {
-			socket = new Socket(serverAddress, port);
-			out = new ObjectOutputStream(socket.getOutputStream());
-			in = new ObjectInputStream(socket.getInputStream());
-						
-			out.writeObject(problem);			
-			
-			String gameDescription = (String)in.readObject();
-			
-			return gameDescription;	
-								
-		} catch (IOException e) {			
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				out.close();
-				in.close();
-				socket.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}			
-		}	
-		return null;
-	}
 }

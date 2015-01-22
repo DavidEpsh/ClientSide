@@ -18,6 +18,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 
 import presenter.Presenter;
 import tasks.Task;
@@ -64,6 +66,17 @@ public class EightPuzzleTimedGameWindow extends UIView {
 	void initWidgets() {
 		shell.setLayout(new GridLayout(2, false));
 	
+		Menu menuBar = new Menu(shell, SWT.BAR);
+		MenuItem cascadeFileMenu = new MenuItem(menuBar, SWT.CASCADE);
+		cascadeFileMenu.setText("&File");
+
+		Menu fileMenu = new Menu(shell, SWT.DROP_DOWN);
+		cascadeFileMenu.setMenu(fileMenu);
+
+		MenuItem exitItem = new MenuItem(fileMenu, SWT.PUSH);
+		exitItem.setText("&Exit");
+		shell.setMenuBar(menuBar);
+		
 		Button btnPause = new Button(shell, SWT.PUSH);
 		btnPause.setText("Pause");
 		btnPause.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1,1));
@@ -77,7 +90,22 @@ public class EightPuzzleTimedGameWindow extends UIView {
 		
 		Button btnClose = new Button(shell, SWT.PUSH);
 		btnClose.setText("Close");
-		btnClose.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1,1));
+		btnClose.setLayoutData(new GridData(SWT.FILL, SWT.UP, false, false, 1,1));
+
+		exitItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				thread.interrupt();
+				shell.dispose();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 
 		btnPause.addSelectionListener(new SelectionListener() {
 			
@@ -107,6 +135,8 @@ public class EightPuzzleTimedGameWindow extends UIView {
 			
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
+				keepGoing = false;
+				thread.interrupt();
 				shell.dispose();
 			}
 			

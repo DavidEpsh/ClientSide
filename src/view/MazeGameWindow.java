@@ -18,6 +18,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 
 import presenter.Presenter;
 
@@ -28,6 +30,7 @@ public class MazeGameWindow extends UIView {
 		
 		this.description = description;
 	}
+	Thread thread;
 	Maze maze;
 	String action;
 	String description;
@@ -37,12 +40,23 @@ public class MazeGameWindow extends UIView {
 	public void initWidgets() {
 		 shell.setLayout(new GridLayout(4, false));
 		 
+		 Menu menuBar = new Menu(shell, SWT.BAR);
+		 MenuItem cascadeFileMenu = new MenuItem(menuBar, SWT.CASCADE);
+		 cascadeFileMenu.setText("&File");
+
+		 Menu fileMenu = new Menu(shell, SWT.DROP_DOWN);
+		 cascadeFileMenu.setMenu(fileMenu);
+
+		 MenuItem exitItem = new MenuItem(fileMenu, SWT.PUSH);
+		 exitItem.setText("&Exit");
+		 shell.setMenuBar(menuBar);
+			
 		 Button btnUp = new Button(shell, SWT.PUSH);
 	 	 btnUp.setText("Up");
 	 	 btnUp.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false,3,1));
 		 
 		 maze=new Maze(shell, SWT.BORDER, description);
-		 maze.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,1,8));
+		 maze.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,1,10));
 		 maze.setFocus();
 		 
 		 Button btnLeft = new Button(shell, SWT.PUSH);
@@ -86,6 +100,19 @@ public class MazeGameWindow extends UIView {
 		 reset.setText("Reset Game");
 		 reset.setLayoutData( new GridData(SWT.FILL,SWT.TOP,false,false,3,1));
 		 
+		 exitItem.addSelectionListener(new SelectionListener() {
+
+				@Override
+				public void widgetSelected(SelectionEvent arg0) {
+					shell.dispose();
+				}
+
+				@Override
+				public void widgetDefaultSelected(SelectionEvent arg0) {
+					// TODO Auto-generated method stub
+
+				}
+			});
 		 
 		 moveOn.addSelectionListener(new SelectionListener() {
 			
@@ -210,8 +237,8 @@ public class MazeGameWindow extends UIView {
 			
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				maze.stop();
-				
+				keepGoing = false;
+				thread.interrupt();
 			}
 			
 			@Override
@@ -291,7 +318,7 @@ public class MazeGameWindow extends UIView {
 		
 		int len = solution.getLength();
 		ArrayList<Action> actions = solution.getActions();		
-		Thread thread = new Thread() {
+		thread = new Thread() {
 			@Override
 			public void run() {
 				

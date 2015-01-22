@@ -51,6 +51,9 @@ public class MyModel extends Observable implements Model {
 			problem.setHeuristicName("Maze");
 	}
 
+	/**
+	 * Using this command, will send our game description to the server and wait for solution
+	 */
 	@Override
 	public void solveDomain() {	
 		
@@ -60,7 +63,9 @@ public class MyModel extends Observable implements Model {
 		this.setChanged();
 		this.notifyObservers();
 	}
-
+/**
+ * This command creates a new game using the description given by the user
+ */
 	public void getNewGame(){
 		
 		String gameDomain = problem.getDomainName();
@@ -102,6 +107,10 @@ public class MyModel extends Observable implements Model {
 		solveDomain();
 	}
 	
+	/**
+	 * this method creates a random Eight puzzle game
+	 */
+	
 	public void createRandomEightPuzzleState() {     // Default Constructor when puzzle not given
 		int[][] eightGameState = new int[3][3];
 		int [] tempIntegers = new int[]{1,2,3,4,5,6,7,8};
@@ -124,6 +133,11 @@ public class MyModel extends Observable implements Model {
 		}
 	}
 	
+	/**
+	 * This method creates an 8 puzzle game using the description given by the user
+	 * @param args
+	 */
+	
 	public void createUserEightPuzzleState(String args){       // Constructor when puzzle is given
 		String[] EightPuzzleProperties = args.split(",");
 		int[][] eightGameState = new int[3][3];
@@ -145,7 +159,12 @@ public class MyModel extends Observable implements Model {
 			updateDescription(eightGameState,3,3);
 		}
 	}
-	
+	/**
+	 * This method receives an 8puzzle game and calculates if it is solvable
+	 * 
+	 * @param eightGame
+	 * @return boolean representing if the 8puzzle is solvable
+	 */
 	public boolean isSolvable(int[][] eightGame){
 
 			int[][] goalState = new int[][]{{1,2,3},{4,5,6},{7,8,0}};
@@ -169,7 +188,12 @@ public class MyModel extends Observable implements Model {
 		
 			return (distance%2==0 || distance == 1); 
 		}
-	
+	/**
+	 * receives an array and represents it as a string 
+	 * @param gameDescription
+	 * @param x represents the length of the array
+	 * @param y represents the height of the array
+	 */
 	public void updateDescription(int[][] gameDescription, int x, int y){
 		String temp =  "";
 		for(int y1=0 ; y1<y ; y1++){
@@ -185,7 +209,10 @@ public class MyModel extends Observable implements Model {
 		
 		description = temp;
 	}
-
+/**
+ * initializes a maze game using a user given description
+ * @param args
+ */
 	public void createMazeGame(String args){
 		
 		String[] mazeProperties = args.split(",");
@@ -224,7 +251,12 @@ public class MyModel extends Observable implements Model {
 		createMazeGame("8,8,20");
 		
 	}
-	
+	/**
+	 * sets the description of the maze game array
+	 * @param length
+	 * @param height
+	 * @param maze
+	 */
 	public void setMazeGameDescription(int length, int height, int[][] maze){
 		
 		String mazeGameDescription = "";

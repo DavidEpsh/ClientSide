@@ -4,6 +4,8 @@ import model.Solution;
 import model.algorithm.Action;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionEvent;
@@ -13,6 +15,8 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 
 import presenter.Presenter;
 
@@ -61,12 +65,20 @@ public class EightPuzzleGameWindow extends UIView{
 	void initWidgets() {
 		shell.setLayout(new GridLayout(3, false));
 		
+		Menu menuBar = new Menu(shell, SWT.BAR);
+		MenuItem cascadeFileMenu = new MenuItem(menuBar, SWT.CASCADE);
+		cascadeFileMenu.setText("&File");
+
+		Menu fileMenu = new Menu(shell, SWT.DROP_DOWN);
+		cascadeFileMenu.setMenu(fileMenu);
+
+		MenuItem exitItem = new MenuItem(fileMenu, SWT.PUSH);
+		exitItem.setText("&Exit");
+		shell.setMenuBar(menuBar);
+		
 		Button btnUp = new Button(shell, SWT.PUSH);
 		btnUp.setText("Up");
 		btnUp.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 2,2));
-		
-//		lstActions = new List(shell, SWT.BORDER | SWT.V_SCROLL);
-//		lstActions.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1 , 6 ));
 		
 		EightPuzzle puzzle=new EightPuzzle(shell, SWT.BORDER , description);
 		puzzle.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,1,8));
@@ -96,7 +108,20 @@ public class EightPuzzleGameWindow extends UIView{
 		lstActions.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 6));
 		lstActions.setVisible(false);
 		
-		
+		exitItem.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				shell.dispose();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+
 		btnUp.addSelectionListener(new SelectionListener() {			
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {

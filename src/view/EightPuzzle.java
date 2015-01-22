@@ -13,7 +13,12 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
-
+import org.eclipse.swt.widgets.MessageBox;
+/**
+ * Window representation of our eight puzzle, it extends canvas and showed at the side of are Eight puzzle game window
+ * @author
+ *
+ */
 
 public class EightPuzzle extends Canvas implements KeyListener{
 
@@ -35,6 +40,13 @@ public class EightPuzzle extends Canvas implements KeyListener{
 		setImages();
 		descriptionArray = description.split(",");
 		
+		if(description.equals("1,2,3,4,5,6,7,8,0"))
+		{
+			MessageBox messageBox = new MessageBox(getShell(), SWT.ICON_WORKING);
+		    messageBox.setMessage("YOU MADE IT !!!!");
+		    messageBox.open();
+		}
+	    
 		addPaintListener(new PaintListener() {
 			
 			@Override
@@ -58,6 +70,7 @@ public class EightPuzzle extends Canvas implements KeyListener{
 				        k++;
 				    }
 				}
+			
 			});
 		
 		addKeyListener(new KeyListener() {
@@ -217,13 +230,11 @@ public class EightPuzzle extends Canvas implements KeyListener{
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 	

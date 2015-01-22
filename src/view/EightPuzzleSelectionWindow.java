@@ -14,7 +14,10 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Text;
+
 import presenter.Presenter;
 
 public class EightPuzzleSelectionWindow extends UIView {
@@ -31,8 +34,19 @@ public class EightPuzzleSelectionWindow extends UIView {
 	@Override
 	void initWidgets() {
 		
-		shell.setLayout(new GridLayout(2, false));
+		shell.setLayout(new GridLayout(1, false));
 
+		Menu menuBar = new Menu(shell, SWT.BAR);
+		MenuItem cascadeFileMenu = new MenuItem(menuBar, SWT.CASCADE);
+		cascadeFileMenu.setText("&File");
+
+		Menu fileMenu = new Menu(shell, SWT.DROP_DOWN);
+		cascadeFileMenu.setMenu(fileMenu);
+
+		MenuItem exitItem = new MenuItem(fileMenu, SWT.PUSH);
+		exitItem.setText("&Exit");
+		shell.setMenuBar(menuBar);
+		
 		Label lblProperties = new Label(shell, SWT.NONE);
 		lblProperties.setText("Choose game properties: ");
 		
@@ -42,8 +56,9 @@ public class EightPuzzleSelectionWindow extends UIView {
 	    comboPuzzleProperties.setItems(itemsProperties);
 	    
 	    final Text txtGameDescription = new Text(shell, SWT.BORDER);
-		txtGameDescription.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true ,2, 1));
+		txtGameDescription.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true ,1, 1));
 		txtGameDescription.setEnabled(false);
+		
 		
 		Label lblAlgorithm = new Label(shell, SWT.NONE);
 		lblAlgorithm.setText("Choose algorithm: ");
@@ -67,7 +82,25 @@ public class EightPuzzleSelectionWindow extends UIView {
 		
 		lstActions = new List(shell, SWT.BORDER | SWT.V_SCROLL);
 		lstActions.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-						
+				
+		exitItem.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				shell.dispose();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		/**
+		 * This selection opens new window that shows the solution, step by step in timed intervals
+		 */
+		
 		btnTimedGame.addSelectionListener(new SelectionListener() {
 			
 			@Override
@@ -94,7 +127,9 @@ public class EightPuzzleSelectionWindow extends UIView {
 				
 			}
 		});
-		 
+		 /**
+		  * This selection opens a window that allows the user to play the game
+		  */
 		btnUserGame.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
@@ -119,6 +154,20 @@ public class EightPuzzleSelectionWindow extends UIView {
 			}
 		});
 		
+		comboAlgorithm.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		comboPuzzleProperties.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
@@ -132,12 +181,15 @@ public class EightPuzzleSelectionWindow extends UIView {
 			}
 		});
 		 
+		/**
+		 * This selection will only get solution and display actions strings
+		 */
 		btnSearch.addSelectionListener(new SelectionListener() {
 			
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {	
 
-				action = "SD 8puzzle:" + txtGameDescription.getText() ;	
+				action = "SD 8puzzle:" + txtGameDescription.getText();	
 				EightPuzzleSelectionWindow.this.setChanged();
 				EightPuzzleSelectionWindow.this.notifyObservers();	
 				
