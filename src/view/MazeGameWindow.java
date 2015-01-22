@@ -4,6 +4,8 @@ import model.Solution;
 import model.algorithm.Action;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
@@ -15,7 +17,7 @@ import org.eclipse.swt.widgets.Label;
 
 import presenter.Presenter;
 
-public class MazeGameWindow extends UIView {
+public class MazeGameWindow extends UIView implements KeyListener {
 
 	public MazeGameWindow(Presenter presenter, Display display, int x, int y, String title,String description) {
 		super(presenter, display,  x, y, title);
@@ -70,6 +72,25 @@ public class MazeGameWindow extends UIView {
 		 reset.setText("Reset Game");
 		 reset.setLayoutData( new GridData(SWT.FILL,SWT.TOP,false,false,3,1));
 		 
+		 btnUp.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.keyCode == SWT.ARROW_UP){
+					
+					maze.up();
+					maze.redraw();
+				}
+				
+			}
+		});
+		 
 		 btnUp.addSelectionListener(new SelectionListener() {			
 				@Override
 				public void widgetSelected(SelectionEvent arg0) {
@@ -83,7 +104,21 @@ public class MazeGameWindow extends UIView {
 					
 				}
 			});
+		
+		 btnDown.addKeyListener(new KeyListener() {
 			
+			@Override
+			public void keyReleased(KeyEvent e) {
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.keyCode == SWT.ARROW_DOWN){
+					maze.down();
+					maze.redraw();
+				}
+			}
+		});
 		 btnDown.addSelectionListener(new SelectionListener() {
 				
 				@Override
@@ -122,7 +157,6 @@ public class MazeGameWindow extends UIView {
 				public void widgetSelected(SelectionEvent arg0) {
 					
 					maze.right();
-					
 					maze.redraw();
 				}
 				
@@ -258,6 +292,34 @@ public class MazeGameWindow extends UIView {
 	
 	public void updateDescription(String description){
 		this.description = description;
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+//		if(e.keyCode == SWT.RIGHT){
+//			
+//			maze.right();
+//			maze.redraw();
+//		}
+//		else if (e.keyCode == SWT.LEFT){
+//			maze.left();
+//			maze.redraw();
+//		}
+//		else if (e.keyCode == SWT.UP){
+//			maze.up();
+//			maze.redraw();
+//		}
+//		else if (e.keyCode == SWT.DOWN){
+//			maze.down();
+//			maze.redraw();
+//		}
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

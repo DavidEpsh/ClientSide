@@ -7,19 +7,19 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 
 class GameCharacter{
-	   int x,y;
+	   int x,y,xm,ym;
 	   
 	   public GameCharacter(int x,int y) {
 		this.x=x;this.y=y;
 	   }
 	   Image image = new Image(null, "src/marco.jpg");
-	   
+	   Image image2 = new Image(null, "src/marcomommy.jpg");
 	 
 	   public void paint(PaintEvent e,int w,int h){
 
 		e.gc.setForeground(new Color(null,255,0,0));
 		e.gc.drawImage(image,0,0, image.getBounds().width, image.getBounds().height, x*w, y*h, w, h);
-		
+		e.gc.drawImage(image2, 0,0, image2.getBounds().width, image2.getBounds().height, xm*w, ym*h, w, h);
 	   // to do: add x and y functions;
 	   
 	}
@@ -30,6 +30,14 @@ class GameCharacter{
 		
 		public void setY(int y){
 			this.y = y;
+		}
+		
+		public void setXM(int xm){
+			this.xm = xm;
+		}
+		
+		public void setYM(int ym){
+			this.ym = ym;
 		}
 }
 

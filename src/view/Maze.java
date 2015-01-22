@@ -59,6 +59,8 @@ public class Maze extends Canvas {
 
 					c.setX(currentState[0]);
 					c.setY(currentState[1]);
+					c.setXM(mazeData[0].length-1);
+					c.setYM(mazeData.length-1);
 				    c.paint(e, len, h);
 
 				}
@@ -107,7 +109,7 @@ public class Maze extends Canvas {
 		currentState[1] = currState[1];
 	}
 	public void up(){
-		if(currentState[1]==0)
+		if(currentState[1]==0|| mazeData[currentState[1]-1][currentState[0]] ==0)
 			return;
 		else{
 			currentState[1]--;
@@ -115,7 +117,7 @@ public class Maze extends Canvas {
 	}
 	
 	public void down(){
-		if(currentState[1]==mazeHeigth-1)
+		if(currentState[1]==mazeHeigth-1|| mazeData[currentState[1]+1][currentState[0]] ==0)
 			return;
 		else{
 			currentState[1]++;
@@ -124,7 +126,7 @@ public class Maze extends Canvas {
 	}
 	
 	public void left(){
-		if(currentState[0]==0)
+		if(currentState[0]==0 || mazeData[currentState[1]][currentState[0]-1] ==0)
 			return;
 		else{
 			currentState[0]--;
@@ -134,7 +136,7 @@ public class Maze extends Canvas {
 	}
 	
 	public void right(){
-		if(currentState[0]==mazeLength-1)
+		if(currentState[0]==mazeLength-1 || mazeData[currentState[1]][currentState[0]+1] ==0)
 			return;
 		else{
 			currentState[0]++;
