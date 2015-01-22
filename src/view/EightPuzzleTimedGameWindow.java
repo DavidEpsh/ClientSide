@@ -83,19 +83,11 @@ public class EightPuzzleTimedGameWindow extends UIView {
 			
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				synchronized (puzzle) {
-					try {
-						wait();
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
+				keepGoing = false;
 			}
 			
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
-				// TODO Auto-generated method stub
 			}
 		});
 		
@@ -103,14 +95,11 @@ public class EightPuzzleTimedGameWindow extends UIView {
 			
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				synchronized (puzzle) {
-					notify();
-				}
+			keepGoing = true;
 			}
 			
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
-				// TODO Auto-generated method stub
 			}
 		});
 		
@@ -119,28 +108,28 @@ public class EightPuzzleTimedGameWindow extends UIView {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				shell.dispose();
-				
 			}
 			
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
-				// TODO Auto-generated method stub
-				
 			}
 		});
 	}
 	
 	@Override
 	public void displaySolution(Solution solution) {
-		synchronized (puzzle) {
 			
+		int len = solution.getLength();
+		ArrayList<Action> actions = solution.getActions();
+		
 		thread = new Thread() {
 			@Override
 			public void run() {
 				
-				for (Action a : solution.getActions()) {
-			
-					String[] temp = a.getDescription().split("-->");
+				for (int i=0; i<len ; i++) {
+					if(keepGoing == true){
+						Action a = actions.get(i);
+						String[] temp = a.getDescription().split("-->");
 				
 					shell.getDisplay().syncExec(new Runnable() {
 						
@@ -148,27 +137,28 @@ public class EightPuzzleTimedGameWindow extends UIView {
 						public void run() {
 							puzzle.updateDescription(temp[1]);
 							puzzle.redraw();
-							
-							try {
-								sleep(400);
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-							
 						}
 					});
-
+					
+					}
+					else{
+						i--;
+					}
+					try {
+						sleep(400);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 				}
-				
+
 			};
-			
-			
+
+
 		};
 		
 		thread.start();
-	}// end of synchronize
-	}//end of function 
+	}
+
 	
 		
 		

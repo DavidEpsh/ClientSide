@@ -4,6 +4,8 @@ import model.Solution;
 import model.algorithm.Action;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
@@ -14,7 +16,7 @@ import org.eclipse.swt.widgets.List;
 
 import presenter.Presenter;
 
-public class EightPuzzleGameWindow extends UIView {
+public class EightPuzzleGameWindow extends UIView{
 	
 	public EightPuzzleGameWindow (Presenter presenter,Display display, int width, int height, String title, String description) {
 		super(presenter,display, width, height, title);	
@@ -24,6 +26,7 @@ public class EightPuzzleGameWindow extends UIView {
 	private String action;
 	private String description;
 	private List lstActions;
+	boolean keepGoing = true;
 	
 	@Override
 	public void start() {
@@ -65,8 +68,9 @@ public class EightPuzzleGameWindow extends UIView {
 //		lstActions = new List(shell, SWT.BORDER | SWT.V_SCROLL);
 //		lstActions.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1 , 6 ));
 		
-		EightPuzzle puzzle=new EightPuzzle(shell, SWT.BORDER | SWT.V_SCROLL, description);
+		EightPuzzle puzzle=new EightPuzzle(shell, SWT.BORDER , description);
 		puzzle.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,true,1,8));
+		puzzle.setFocus();
 		
 		Button btnLeft = new Button(shell, SWT.PUSH);
 		btnLeft.setText("Left");
@@ -195,10 +199,7 @@ public class EightPuzzleGameWindow extends UIView {
 			
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
-				// TODO Auto-generated method stub
-				
 			}
 		});
 	}
-	
 }

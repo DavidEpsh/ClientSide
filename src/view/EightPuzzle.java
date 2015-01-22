@@ -1,15 +1,21 @@
 package view;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 
-public class EightPuzzle extends Canvas{
+
+public class EightPuzzle extends Canvas implements KeyListener{
 
 	//GameCharacter c;
 	Timer timer;
@@ -17,14 +23,16 @@ public class EightPuzzle extends Canvas{
 	int[][] gameState = new int[3][3];
 	String description;
 	String[] descriptionArray = new String[9];
+	Image[] buttonsArray;
 
+	
 	 public EightPuzzle(Composite parent, int style, String description) {
 		super(parent, style);
 		//c = new GameCharacter(10, 10);
 		//set a white background (red,green,blue)
 		setBackground(new Color(null,255,255,255));
 		this.description = description;
-		
+		setImages();
 		descriptionArray = description.split(",");
 		
 		addPaintListener(new PaintListener() {
@@ -45,11 +53,81 @@ public class EightPuzzle extends Canvas{
 				    for(int x1=0;x1<3;x1++){
 				    	int x=x1*w;
 				        int y=y1*h;
-				        e.gc.drawText(descriptionArray[k], x , y );
+				        Image tempImage = buttonsArray[Integer.parseInt(descriptionArray[k])];
+				        e.gc.drawImage(tempImage , 0, 0, tempImage.getBounds().width, tempImage.getBounds().height, x, y, w, h);
 				        k++;
 				    }
 				}
 			});
+		
+		addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+
+				getDisplay().syncExec(new Runnable() {
+
+					@Override
+					public void run() {
+
+						if(e.keyCode == SWT.ARROW_RIGHT){
+
+							zeroRight();
+							
+							getDisplay().syncExec(new Runnable()
+							{	
+								@Override
+								public void run() 
+								{
+									redraw();
+								}
+							});
+						}
+						else if (e.keyCode == SWT.ARROW_LEFT){
+							zeroLeft();
+							getDisplay().syncExec(new Runnable()
+							{	
+								@Override
+								public void run() 
+								{
+									redraw();
+								}
+							});
+						}
+						else if (e.keyCode == SWT.ARROW_UP){
+							zeroUp();
+							getDisplay().syncExec(new Runnable()
+							{	
+								@Override
+								public void run() 
+								{
+									redraw();
+								}
+							});
+						}
+						else if (e.keyCode == SWT.ARROW_DOWN){
+							zeroDown();
+							getDisplay().syncExec(new Runnable()
+							{	
+								@Override
+								public void run() 
+								{
+									redraw();
+								}
+							});
+						}
+
+					}
+				});
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+	
 	 }
 	 
 	 public void zeroUp(){
@@ -130,45 +208,36 @@ public class EightPuzzle extends Canvas{
 		descriptionArray = description.split(",");
 	}
 
-	/*	addDisposeListener(new DisposeListener() {
-			
-			@Override
-			public void widgetDisposed(DisposeEvent arg0) {
-				stop();
-			}
-		
-		});
-		
-		} */
-	/*
-	public void start() {
-		timer = new Timer();
-		task = new TimerTask() {
-			
-			@Override
-			public void run() {
-				getDisplay().syncExec(new Runnable() {
-					
-					@Override
-					public void run() {
-						Random r = new Random();
-						c.x += -5 + r.nextInt(11);
-						c.y += -5 + r.nextInt(11);
-						redraw();
-					}
-				});
-
-			}
-		};
-		timer.scheduleAtFixedRate(task, 0, 500);
-
-	}
-	*/
 	public void stop() {
 		if(task != null)
 			task.cancel();
 		if(timer != null)
 			timer.cancel();
+	}
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public void setImages(){
+		buttonsArray = new Image[9];
+		buttonsArray[0] = new Image(null, "Images/button0.jpeg");
+		buttonsArray[1] = new Image(null, "Images/button1.jpeg");
+		buttonsArray[2] = new Image(null, "Images/button2.jpeg");
+		buttonsArray[3] = new Image(null, "Images/button3.jpeg");
+		buttonsArray[4] = new Image(null, "Images/button4.jpeg");
+		buttonsArray[5] = new Image(null, "Images/button5.jpeg");
+		buttonsArray[6] = new Image(null, "Images/button6.jpeg");
+		buttonsArray[7] = new Image(null, "Images/button7.jpeg");
+		buttonsArray[8] = new Image(null, "Images/button8.jpeg");
 	}
 
 }

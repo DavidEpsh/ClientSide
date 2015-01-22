@@ -12,8 +12,8 @@ class GameCharacter{
 	   public GameCharacter(int x,int y) {
 		this.x=x;this.y=y;
 	   }
-	   Image image = new Image(null, "src/marco.jpg");
-	   Image image2 = new Image(null, "src/marcomommy.jpg");
+	   Image image = new Image(null, "Images/marco.jpg");
+	   Image image2 = new Image(null, "Images/marcomommy.jpg");
 	 
 	   public void paint(PaintEvent e,int w,int h){
 
