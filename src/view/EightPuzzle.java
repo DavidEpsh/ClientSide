@@ -1,6 +1,5 @@
 package view;
 
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -33,8 +32,7 @@ public class EightPuzzle extends Canvas implements KeyListener{
 	
 	 public EightPuzzle(Composite parent, int style, String description) {
 		super(parent, style);
-		//c = new GameCharacter(10, 10);
-		//set a white background (red,green,blue)
+		
 		setBackground(new Color(null,255,255,255));
 		this.description = description;
 		setImages();
@@ -65,6 +63,7 @@ public class EightPuzzle extends Canvas implements KeyListener{
 				    for(int x1=0;x1<3;x1++){
 				    	int x=x1*w;
 				        int y=y1*h;
+				        int t = Integer.parseInt(descriptionArray[k]);
 				        Image tempImage = buttonsArray[Integer.parseInt(descriptionArray[k])];
 				        e.gc.drawImage(tempImage , 0, 0, tempImage.getBounds().width, tempImage.getBounds().height, x, y, w, h);
 				        k++;
