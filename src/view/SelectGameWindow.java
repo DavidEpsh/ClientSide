@@ -36,7 +36,7 @@ public class SelectGameWindow extends BasicWindow {
 		
 		final Combo combo = new Combo(shell, SWT.READ_ONLY);	
 		combo.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false));
-	    String items[] = { "8puzzle", "Maze" };
+	    String items[] = { "8puzzle", "Maze","Hagana" };
 	    combo.setItems(items);
 	    
 	    Button btnSelectModel = new Button(shell, SWT.PUSH);
@@ -66,10 +66,14 @@ public class SelectGameWindow extends BasicWindow {
 				UIView window = new EightPuzzleSelectionWindow(presenter, display, 250, 450, "8puzzle Game");
 				window.run();
 				}
-				else{
+				else if (combo.getText().equals("Maze")){
 					UIView window = new MazeSelectionWindow(presenter, display, 300, 300, "Maze game");
 					window.run();
 					}
+				else {
+					UIView window = new HaganaAwindow(presenter, display, 300, 300, "HaganaA");
+					window.run();
+				}
 		
 			}
 			
